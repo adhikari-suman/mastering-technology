@@ -1,10 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import * as solution from './solution.js';
 
-// Pulled off the namespace rather than destructured in the import itself:
-// a blank solution.js then shows up as readable per-test failures instead
-// of one module-load crash.
+// Your answers live in solution.js, which you create yourself:
+//     cp exercise.js solution.js
+//
+// It is loaded leniently so that a missing file surfaces as one clear
+// failure instead of a module-load crash that hides every other test.
+let solution = {};
+let loadError = null;
+try {
+  solution = await import('./solution.js');
+} catch (err) {
+  loadError = err;
+}
+
+test('solution.js exists', () => {
+  assert.equal(loadError, null, 'Create it first:  cp exercise.js solution.js');
+});
+
 const {
   fizzbuzz,
   grade,

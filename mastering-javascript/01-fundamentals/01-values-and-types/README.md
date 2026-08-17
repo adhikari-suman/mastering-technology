@@ -71,46 +71,30 @@ Explicit conversion is a feature. Implicit conversion is lesson 02's problem.
 
 ## What to build
 
-`solution.js` is empty. Export each of these. The examples below are
-illustrative — `solution.test.js` is the authority.
+You write these in `solution.js`. The full spec for each — signature,
+examples, edge cases — is in the JSDoc above the corresponding stub in
+`exercise.js`, and `exercise.test.js` is the final authority.
 
-### `typeOf(value)`
-Like `typeof`, but honest: `'null'` for `null`, `'array'` for arrays, otherwise
-the normal `typeof` string.
-`typeOf(null)` → `'null'` · `typeOf([1,2])` → `'array'` · `typeOf('hi')` → `'string'`
-
-### `toNumber(value)`
-Convert to a number, but return `null` rather than letting `NaN` escape into the
-rest of the program.
-`toNumber('42')` → `42` · `toNumber('42abc')` → `null` · `toNumber(true)` → `1`
-
-### `isReallyNaN(value)`
-True only when the value **is** `NaN`. No coercion — the old global `isNaN`
-would say `true` for `'hello'`, and that's the bug you're avoiding.
-`isReallyNaN(NaN)` → `true` · `isReallyNaN('hello')` → `false`
-
-### `describeNumber(n)`
-Classify a number as `'integer'`, `'float'`, `'infinite'`, or `'not a number'`
-(the last one covers both non-numbers and `NaN` itself).
-`describeNumber(42)` → `'integer'` · `describeNumber(Infinity)` → `'infinite'`
-
-### `formatIntro(name, age)`
-Build a sentence with a template literal, not `+` concatenation.
-`formatIntro('Ada', 36)` → `'Ada is 36 years old.'`
-
-### `almostEqual(a, b, epsilon = 1e-9)`
-Compare two floats safely: true when they differ by less than `epsilon`.
-`almostEqual(0.1 + 0.2, 0.3)` → `true`
+| Export | What it does |
+| --- | --- |
+| `typeOf(value)` | `typeof`, but honest — `'null'` for null, `'array'` for arrays |
+| `toNumber(value)` | Convert to number; `null` rather than letting `NaN` escape |
+| `isReallyNaN(value)` | True only for the actual `NaN` value, with no coercion |
+| `describeNumber(n)` | `'integer'` / `'float'` / `'infinite'` / `'not a number'` |
+| `formatIntro(name, age)` | A sentence built with a template literal |
+| `almostEqual(a, b, epsilon)` | Float comparison that survives `0.1 + 0.2` |
 
 ## Running it
 
-From inside this folder:
+From inside this folder, make your working copy and start the watcher:
 
 ```bash
+cp exercise.js solution.js
 node --test --watch
 ```
 
-That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+`exercise.js` is never edited, so that first command is also how you start the
+lesson over from scratch. Drop `--watch` for a single run — it exits non-zero
 while anything is still red.
 
 ## Going deeper

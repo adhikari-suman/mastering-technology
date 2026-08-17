@@ -1,16 +1,14 @@
 # Mastering JavaScript
 
-Exercise-driven. Every lesson is a folder with three files:
+Exercise-driven. Every lesson is a folder with three files, plus one you make
+yourself:
 
-| File               | What it is                                                    |
-| ------------------ | ------------------------------------------------------------- |
-| `README.md`        | The concept, the traps, and **what to build**                   |
-| `solution.test.js` | The spec. Already written. Red until you implement. Don't edit. |
-| `solution.js`      | **Empty.** You write it from scratch.                           |
-
-You start from a blank file, not from stubs. The README tells you what to
-export and the tests tell you whether you got it right — nothing pre-shapes
-your answer.
+| File               | What it is                                                          |
+| ------------------ | ------------------------------------------------------------------- |
+| `README.md`        | The concept, the traps, and a checklist of what to build             |
+| `exercise.js`      | Stubs + the full spec in JSDoc. **Never edited** — your reset point   |
+| `exercise.test.js` | The spec, executable. Red until you implement. Don't edit.           |
+| `solution.js`      | ⬅ **you create this**, by copying `exercise.js`. Your answers go here |
 
 Zero dependencies. Everything runs on Node's built-in test runner.
 
@@ -20,10 +18,13 @@ Work one lesson at a time, from inside its folder:
 
 ```bash
 cd 01-fundamentals/01-values-and-types
-node --test --watch
+cp exercise.js solution.js      # your working copy — do this once per lesson
+node --test --watch             # the main loop; re-runs on every save
 ```
 
-That's the main loop: it re-runs on every save. Drop `--watch` for a single run.
+The tests import `solution.js`, so until you make that copy the suite reports a
+single clear failure telling you to. Because `exercise.js` is never edited, that
+same `cp` is how you wipe a lesson and start it again later.
 
 From the repo root, to run everything you've done so far:
 
@@ -31,20 +32,19 @@ From the repo root, to run everything you've done so far:
 npm test
 ```
 
+There's also `npm run setup`, which creates any missing `solution.js` files
+across all lessons in one go, if you'd rather not copy them one at a time.
+
 > **Note:** `node --test <directory>` does **not** work on Node 24 — it tries to
 > execute the directory as a script. Either `cd` into the folder and run
 > `node --test` bare (as above), or pass a glob:
 > `node --test "01-fundamentals/01-values-and-types/*.test.js"`.
 
-Read the README → run the tests → watch them fail → make them pass one at a
-time → read the "Going deeper" questions → move on.
+Read the README → make your copy → run the tests → watch them fail → make them
+pass one at a time → read the "Going deeper" questions → move on.
 
 A lesson is done when the tests are green **and** you can explain out loud why
 each answer is what it is. Green tests you can't explain are not mastery.
-
-Because `solution.js` starts empty, your first failure for every function is
-`TypeError: <name> is not a function` — that's the suite telling you which
-export it's still waiting on.
 
 ## Rules of the road
 

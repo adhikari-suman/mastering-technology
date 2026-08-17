@@ -75,52 +75,34 @@ you understand what those methods are doing — then mostly stop writing them.
 
 ## What to build
 
-`solution.js` is empty. Write these with explicit loops and branches — the array
-methods that would shortcut most of them arrive in lesson 05.
+You write these in `solution.js`. The full spec for each — signature,
+examples, edge cases — is in the JSDoc above the corresponding stub in
+`exercise.js`, and `exercise.test.js` is the final authority.
 
-### `fizzbuzz(n)`
-Numbers `1..n` as an array of strings. Multiples of 3 → `'Fizz'`, of 5 →
-`'Buzz'`, of both → `'FizzBuzz'`, otherwise the number as a string. Mind the
-order: check 15 before 3 and 5.
-`fizzbuzz(5)` → `['1', '2', 'Fizz', '4', 'Buzz']`
+Write these with explicit loops and branches — the array methods that would
+shortcut most of them arrive in lesson 05.
 
-### `grade(score)`
-Letter grade out of 100: 90+ `'A'`, 80+ `'B'`, 70+ `'C'`, 60+ `'D'`, else
-`'F'`. Out of range (below 0 or above 100) → `null`. Write it with guard
-clauses — no `else`, no nesting.
-
-### `dayType(day)`
-`'weekend'` for `'sat'`/`'sun'`, `'weekday'` for the other five, `null` for
-anything else. Use a `switch`, with deliberate fall-through for the shared cases.
-
-### `sumEven(numbers)`
-Sum only the even numbers, using a loop with `continue` to skip the odd ones.
-Remember that `0` and negatives are even too.
-`sumEven([1, 2, 3, 4])` → `6`
-
-### `firstNegativeIndex(numbers)`
-Index of the first negative number, or `-1` if there isn't one. Stop looking the
-moment you find it.
-`firstNegativeIndex([1, 2, -3, -4])` → `2`
-
-### `countdown(n)`
-Count down from `n` to 1 as an array, using a `while` loop. `n < 1` → `[]`.
-`countdown(3)` → `[3, 2, 1]`
-
-### `halvingSteps(n)`
-Repeatedly halve `n` with integer division until it reaches 1, and return how
-many halvings that took.
-`halvingSteps(8)` → `3` (8 → 4 → 2 → 1) · `halvingSteps(10)` → `3` · `halvingSteps(1)` → `0`
+| Export | What it does |
+| --- | --- |
+| `fizzbuzz(n)` | `1..n` as strings, with Fizz/Buzz/FizzBuzz |
+| `grade(score)` | Letter grade via guard clauses; `null` out of range |
+| `dayType(day)` | `switch` with deliberate fall-through |
+| `sumEven(numbers)` | A loop using `continue` |
+| `firstNegativeIndex(numbers)` | Stop looking the moment you find it |
+| `countdown(n)` | A `while` loop, descending |
+| `halvingSteps(n)` | How many integer halvings reach 1 |
 
 ## Running it
 
-From inside this folder:
+From inside this folder, make your working copy and start the watcher:
 
 ```bash
+cp exercise.js solution.js
 node --test --watch
 ```
 
-That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+`exercise.js` is never edited, so that first command is also how you start the
+lesson over from scratch. Drop `--watch` for a single run — it exits non-zero
 while anything is still red.
 
 ## Going deeper

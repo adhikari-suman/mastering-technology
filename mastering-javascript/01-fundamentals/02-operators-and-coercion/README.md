@@ -85,79 +85,38 @@ chaining `user?.name` — exists.
 
 ## What to build
 
-Two parts. **Do part 1 first, from your head, before you run anything.**
+You write these in `solution.js`. The full spec for each — signature,
+examples, edge cases — is in the JSDoc above the corresponding stub in
+`exercise.js`, and `exercise.test.js` is the final authority.
 
-### Part 1 — `PREDICTIONS`
+First, `PREDICTIONS` — an object mapping 16 expressions to what you believe
+each one evaluates to. **Fill it in from your head before you run anything.**
+The test evaluates each expression for real and compares, so a wrong guess is a
+red test with your name on it. That is the point of the lesson, so don't peek
+at the REPL first.
 
-Export an object mapping each expression below to what you believe it evaluates
-to. Copy this skeleton into `solution.js` and replace every `'TODO'`. Guessing
-wrong here is the single most useful thing that can happen in this lesson, so
-predict before you verify.
+Then the functions:
 
-```js
-export const PREDICTIONS = {
-  'null == undefined': 'TODO',
-  'null === undefined': 'TODO',
-  'null == 0': 'TODO',
-  'null >= 0': 'TODO',
-  '0 == "0"': 'TODO',
-  '0 == ""': 'TODO',
-  '"" == "0"': 'TODO',
-  'NaN == NaN': 'TODO',
-  '[] == false': 'TODO',
-  'typeof NaN': 'TODO',
-  '1 + "2"': 'TODO',
-  '"3" - 1': 'TODO',
-  '"3" * "4"': 'TODO',
-  '[] + {}': 'TODO',
-  'Boolean([])': 'TODO',
-  'Boolean("false")': 'TODO',
-};
-```
-
-The test evaluates each expression for real and compares it to your answer, so a
-wrong prediction is a red test with your name on it.
-
-### Part 2 — the functions
-
-### `isTruthy(value)`
-True when the value is truthy. Let the language convert it — don't write a list
-of comparisons.
-`isTruthy('0')` → `true` · `isTruthy('')` → `false`
-
-### `defaultTo(value, fallback)`
-Return `value` unless it is `null` or `undefined`. A legitimate `0`, `''`, or
-`false` must survive.
-`defaultTo(0, 100)` → `0` · `defaultTo(null, 100)` → `100`
-
-### `orDefault(value, fallback)`
-Return `value` unless it is falsy in **any** way. The deliberate contrast with
-`defaultTo`.
-`orDefault(0, 100)` → `100` · `orDefault('hi', 'x')` → `'hi'`
-
-### `addNumeric(a, b)`
-Add two values that may have arrived as strings, from a form or a CSV. Return
-`null` if either isn't numeric.
-`addNumeric('10', 5)` → `15` (not `'105'`) · `addNumeric('10', 'x')` → `null`
-
-### `compare(a, b)`
-A comparator of the shape `Array.prototype.sort` expects: negative if `a` sorts
-first, positive if `b` does, `0` if equal.
-`[10, 1, 5].sort(compare)` → `[1, 5, 10]`
-
-### `isNullish(value)`
-True for `null` and `undefined`, false for everything else — including `0`,
-`''`, and `NaN`. This is the one place `==` earns its keep.
+| Export | What it does |
+| --- | --- |
+| `isTruthy(value)` | Truthiness, by letting the language convert |
+| `defaultTo(value, fallback)` | Falls back only on `null`/`undefined` |
+| `orDefault(value, fallback)` | Falls back on any falsy value — the contrast |
+| `addNumeric(a, b)` | Adds possibly-string input; `null` if not numeric |
+| `compare(a, b)` | A comparator of the shape `sort` expects |
+| `isNullish(value)` | `null` or `undefined`, nothing else |
 
 ## Running it
 
-From inside this folder:
+From inside this folder, make your working copy and start the watcher:
 
 ```bash
+cp exercise.js solution.js
 node --test --watch
 ```
 
-That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+`exercise.js` is never edited, so that first command is also how you start the
+lesson over from scratch. Drop `--watch` for a single run — it exits non-zero
 while anything is still red.
 
 ## Going deeper

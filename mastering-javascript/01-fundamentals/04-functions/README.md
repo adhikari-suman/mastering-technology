@@ -94,57 +94,36 @@ call to `makeCounter()` gets a fresh, independent `count`.
 
 ## What to build
 
-`solution.js` is empty. The first three specify *which form* to use — the point
-is to write all three by hand, not to pick a favourite.
+You write these in `solution.js`. The full spec for each — signature,
+examples, edge cases — is in the JSDoc above the corresponding stub in
+`exercise.js`, and `exercise.test.js` is the final authority.
 
-### `square(n)`
-Write this as a function **declaration**. `square(4)` → `16`
+The first three specify *which form* to use — the point is to write all three
+by hand, not to pick a favourite.
 
-### `cube(n)`
-Write this as a function **expression** assigned to a `const`. `cube(3)` → `27`
-
-### `double(n)`
-Write this as an **arrow** function with an implicit return — no braces.
-`double(5)` → `10`
-
-### `makeGreeting(name, greeting)`
-`greeting` defaults to `'Hello'`. Put the default in the parameter list, not in
-the body.
-`makeGreeting('Ada')` → `'Hello, Ada!'` · `makeGreeting('Ada', 'Howdy')` → `'Howdy, Ada!'`
-
-### `sumAll(...numbers)`
-Sum any number of arguments using rest parameters. No arguments → `0`.
-`sumAll(1, 2, 3)` → `6`
-
-### `applyTwice(fn, value)`
-Apply `fn` to `value` twice. Your first higher-order function.
-`applyTwice(n => n + 3, 1)` → `7`
-
-### `makeAdder(amount)`
-Return a **new function** that adds `amount` to whatever it's given. Two adders
-must not interfere with each other.
-`makeAdder(5)(10)` → `15`
-
-### `makeCounter()`
-Return a counter function. Each call returns the next number, starting at 1.
-Two separate counters must each have their own independent count — that
-independence is the closure doing its job.
-`const next = makeCounter(); next(); next()` → `1`, then `2`
-
-### `makePoint(x, y)`
-An arrow function with an implicit return of an **object literal**. Remember the
-parentheses, or the braces are read as a function body.
-`makePoint(1, 2)` → `{ x: 1, y: 2 }`
+| Export | What it does |
+| --- | --- |
+| `square(n)` | Written as a function **declaration** |
+| `cube(n)` | Written as a function **expression** |
+| `double(n)` | Written as an **arrow** with an implicit return |
+| `makeGreeting(name, greeting)` | Default parameter |
+| `sumAll(...numbers)` | Rest parameters |
+| `applyTwice(fn, value)` | Your first higher-order function |
+| `makeAdder(amount)` | Returns a new function |
+| `makeCounter()` | Returns a counter — independent per call. A closure. |
+| `makePoint(x, y)` | Arrow implicitly returning an object literal |
 
 ## Running it
 
-From inside this folder:
+From inside this folder, make your working copy and start the watcher:
 
 ```bash
+cp exercise.js solution.js
 node --test --watch
 ```
 
-That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+`exercise.js` is never edited, so that first command is also how you start the
+lesson over from scratch. Drop `--watch` for a single run — it exits non-zero
 while anything is still red.
 
 ## Going deeper
