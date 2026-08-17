@@ -32,8 +32,45 @@ From the repo root, to run everything you've done so far:
 npm test
 ```
 
-There's also `npm run setup`, which creates any missing `solution.js` files
-across all lessons in one go, if you'd rather not copy them one at a time.
+## Managing your solution files
+
+`cp exercise.js solution.js` is all you ever strictly need, but there are four
+helpers for doing it in bulk:
+
+```bash
+npm run setup     # create solution.js wherever it's missing
+npm run status    # which lessons are started / untouched / not begun
+npm run reset     # restore solution.js from exercise.js   (destructive)
+npm run clean     # delete solution.js                     (destructive)
+```
+
+Each takes an optional filter that substring-matches the lesson path, so you can
+act on one lesson or one module instead of all of them:
+
+```bash
+npm run reset -- 03-control
+npm run clean -- 01-fundamentals
+```
+
+`reset` and `clean` throw work away, so they refuse to run if **any** matched
+`solution.js` differs from its stubs, and print exactly which ones. Add `--yes`
+when you mean it. Copies you haven't touched yet are removed without fuss, since
+there's nothing in them to lose.
+
+`npm run status` marks started lessons with `*`:
+
+```
+* 01-fundamentals/01-values-and-types        started
+  01-fundamentals/02-operators-and-coercion  untouched copy
+  01-fundamentals/03-control-flow            no solution.js
+```
+
+### Commit your solutions
+
+`solution.js` is deliberately **not** gitignored. Your answers are the point of
+this repo — they're worth keeping, they show your progress over time, and having
+them tracked means `git checkout` can undo a `reset` or `clean` you didn't mean.
+The repo itself ships no `solution.js`, so a fresh clone is a clean slate.
 
 > **Note:** `node --test <directory>` does **not** work on Node 24 — it tries to
 > execute the directory as a script. Either `cd` into the folder and run
