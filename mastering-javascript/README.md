@@ -12,6 +12,21 @@ yourself:
 
 Zero dependencies. Everything runs on Node's built-in test runner.
 
+## Node version
+
+`.nvmrc` pins this project to `lts/*` — whatever the current Node LTS is, so it
+never goes stale:
+
+```bash
+nvm install     # installs the LTS named in .nvmrc, first time only
+nvm use         # switches to it, any time after
+```
+
+`package.json` sets `engines.node` to `>=20`, which is a different statement:
+20 is the oldest version the lesson code actually needs (`node --test`,
+`structuredClone`, `toSorted`). The `.nvmrc` is what to develop on; `engines` is
+the floor below which things break.
+
 ## How to work
 
 Work one lesson at a time, from inside its folder:
