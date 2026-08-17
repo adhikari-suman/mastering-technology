@@ -67,10 +67,15 @@ there's nothing in them to lose.
 
 ### Commit your solutions
 
-`solution.js` is deliberately **not** gitignored. Your answers are the point of
-this repo — they're worth keeping, they show your progress over time, and having
-them tracked means `git checkout` can undo a `reset` or `clean` you didn't mean.
-The repo itself ships no `solution.js`, so a fresh clone is a clean slate.
+`solution.js` is deliberately **not** gitignored — commit your answers as you
+go. They're the only part of this repo that isn't regenerable, they show your
+progress over time, and having them tracked means `git checkout` can undo a
+`reset` or `clean` you didn't mean.
+
+This is a public repo, so those answers are visible. That's intentional: it's a
+learning journal, not a course to hand out. If you'd rather ship a clean
+template for other people to work through, add `solution.js` to `.gitignore`
+and update rule 4 below.
 
 > **Note:** `node --test <directory>` does **not** work on Node 24 — it tries to
 > execute the directory as a script. Either `cd` into the folder and run
@@ -92,8 +97,10 @@ each answer is what it is. Green tests you can't explain are not mastery.
    gap between your prediction and reality is the entire lesson.
 3. **Use the REPL.** `node` with no arguments gives you a scratchpad. Poke at
    things. `typeof null`, `[] + {}`, `0.1 + 0.2` — go break stuff.
-4. **No answer key in this repo, on purpose.** Ask me when you're genuinely
-   stuck and I'll walk you through the reasoning rather than paste an answer.
+4. **The scaffold ships no answer key.** `exercise.js` only ever contains
+   stubs. The solved `solution.js` files in this repo are my own worked
+   answers, committed as a record — if you're doing these lessons yourself,
+   reading them before you've tried only cheats you.
 
 ## Curriculum
 
