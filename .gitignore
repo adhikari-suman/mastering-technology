@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Personal, machine-local Claude Code settings (permissions etc.)
+.claude/settings.local.json
+
+# OS noise
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

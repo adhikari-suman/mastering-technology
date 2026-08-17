@@ -1,0 +1,14 @@
+{
+  "name": "mastering-javascript",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Exercise-driven path to mastering JavaScript. Zero dependencies.",
+  "scripts": {
+    "test": "node --test",
+    "test:watch": "node --test --watch"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
