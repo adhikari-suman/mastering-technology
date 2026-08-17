@@ -14,8 +14,9 @@ Zero dependencies. Everything runs on Node's built-in test runner.
 
 ## Node version
 
-`.nvmrc` pins this project to `lts/*` — whatever the current Node LTS is, so it
-never goes stale:
+`.nvmrc` pins this project to `lts/krypton` — the Node 24 LTS line, currently
+v24.19.0. Naming the codename rather than an exact version means patch releases
+are picked up automatically while the major stays put:
 
 ```bash
 nvm install     # installs the LTS named in .nvmrc, first time only
