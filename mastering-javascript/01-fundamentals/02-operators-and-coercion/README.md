@@ -83,12 +83,82 @@ Both **short-circuit**: the right side never runs if the left side decides it.
 That's why `user && user.name` works, and why the modern version — optional
 chaining `user?.name` — exists.
 
-## Your task
+## What to build
 
-`exercise.js` starts with a `PREDICTIONS` object. **Fill it in before running
-anything.** Write down what you believe each expression evaluates to. The test
-compares your predictions against reality, so a wrong answer is a red test with
-your name on it — which is exactly the point. Then implement the functions below.
+Two parts. **Do part 1 first, from your head, before you run anything.**
+
+### Part 1 — `PREDICTIONS`
+
+Export an object mapping each expression below to what you believe it evaluates
+to. Copy this skeleton into `solution.js` and replace every `'TODO'`. Guessing
+wrong here is the single most useful thing that can happen in this lesson, so
+predict before you verify.
+
+```js
+export const PREDICTIONS = {
+  'null == undefined': 'TODO',
+  'null === undefined': 'TODO',
+  'null == 0': 'TODO',
+  'null >= 0': 'TODO',
+  '0 == "0"': 'TODO',
+  '0 == ""': 'TODO',
+  '"" == "0"': 'TODO',
+  'NaN == NaN': 'TODO',
+  '[] == false': 'TODO',
+  'typeof NaN': 'TODO',
+  '1 + "2"': 'TODO',
+  '"3" - 1': 'TODO',
+  '"3" * "4"': 'TODO',
+  '[] + {}': 'TODO',
+  'Boolean([])': 'TODO',
+  'Boolean("false")': 'TODO',
+};
+```
+
+The test evaluates each expression for real and compares it to your answer, so a
+wrong prediction is a red test with your name on it.
+
+### Part 2 — the functions
+
+### `isTruthy(value)`
+True when the value is truthy. Let the language convert it — don't write a list
+of comparisons.
+`isTruthy('0')` → `true` · `isTruthy('')` → `false`
+
+### `defaultTo(value, fallback)`
+Return `value` unless it is `null` or `undefined`. A legitimate `0`, `''`, or
+`false` must survive.
+`defaultTo(0, 100)` → `0` · `defaultTo(null, 100)` → `100`
+
+### `orDefault(value, fallback)`
+Return `value` unless it is falsy in **any** way. The deliberate contrast with
+`defaultTo`.
+`orDefault(0, 100)` → `100` · `orDefault('hi', 'x')` → `'hi'`
+
+### `addNumeric(a, b)`
+Add two values that may have arrived as strings, from a form or a CSV. Return
+`null` if either isn't numeric.
+`addNumeric('10', 5)` → `15` (not `'105'`) · `addNumeric('10', 'x')` → `null`
+
+### `compare(a, b)`
+A comparator of the shape `Array.prototype.sort` expects: negative if `a` sorts
+first, positive if `b` does, `0` if equal.
+`[10, 1, 5].sort(compare)` → `[1, 5, 10]`
+
+### `isNullish(value)`
+True for `null` and `undefined`, false for everything else — including `0`,
+`''`, and `NaN`. This is the one place `==` earns its keep.
+
+## Running it
+
+From inside this folder:
+
+```bash
+node --test --watch
+```
+
+That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+while anything is still red.
 
 ## Going deeper
 

@@ -2,37 +2,49 @@
 
 Exercise-driven. Every lesson is a folder with three files:
 
-| File               | What it is                                              |
-| ------------------ | ------------------------------------------------------- |
-| `README.md`        | The concept, why it matters, and the traps              |
-| `exercise.js`      | Stubs with `TODO`s — **this is the file you edit**       |
-| `exercise.test.js` | The spec. Red until you implement. **Don't edit this.**  |
+| File               | What it is                                                    |
+| ------------------ | ------------------------------------------------------------- |
+| `README.md`        | The concept, the traps, and **what to build**                   |
+| `solution.test.js` | The spec. Already written. Red until you implement. Don't edit. |
+| `solution.js`      | **Empty.** You write it from scratch.                           |
+
+You start from a blank file, not from stubs. The README tells you what to
+export and the tests tell you whether you got it right — nothing pre-shapes
+your answer.
 
 Zero dependencies. Everything runs on Node's built-in test runner.
 
 ## How to work
 
+Work one lesson at a time, from inside its folder:
+
 ```bash
-cd mastering-javascript
+cd 01-fundamentals/01-values-and-types
+node --test --watch
+```
 
-# Run one lesson
-node --test 01-fundamentals/01-values-and-types
+That's the main loop: it re-runs on every save. Drop `--watch` for a single run.
 
-# Run one lesson, re-running on every save (this is the main loop)
-node --test --watch 01-fundamentals/01-values-and-types
+From the repo root, to run everything you've done so far:
 
-# Run a whole module
-node --test 01-fundamentals
-
-# Run everything you've done so far
+```bash
 npm test
 ```
 
-The loop is: read the README → run the tests → watch them fail → make them pass
-one at a time → read the README's "Going deeper" section → move on.
+> **Note:** `node --test <directory>` does **not** work on Node 24 — it tries to
+> execute the directory as a script. Either `cd` into the folder and run
+> `node --test` bare (as above), or pass a glob:
+> `node --test "01-fundamentals/01-values-and-types/*.test.js"`.
+
+Read the README → run the tests → watch them fail → make them pass one at a
+time → read the "Going deeper" questions → move on.
 
 A lesson is done when the tests are green **and** you can explain out loud why
 each answer is what it is. Green tests you can't explain are not mastery.
+
+Because `solution.js` starts empty, your first failure for every function is
+`TypeError: <name> is not a function` — that's the suite telling you which
+export it's still waiting on.
 
 ## Rules of the road
 
@@ -43,9 +55,8 @@ each answer is what it is. Green tests you can't explain are not mastery.
    gap between your prediction and reality is the entire lesson.
 3. **Use the REPL.** `node` with no arguments gives you a scratchpad. Poke at
    things. `typeof null`, `[] + {}`, `0.1 + 0.2` — go break stuff.
-4. **No solutions in this repo, on purpose.** Ask me for one when you're
-   genuinely stuck, and I'll walk you through the reasoning rather than paste
-   an answer.
+4. **No answer key in this repo, on purpose.** Ask me when you're genuinely
+   stuck and I'll walk you through the reasoning rather than paste an answer.
 
 ## Curriculum
 

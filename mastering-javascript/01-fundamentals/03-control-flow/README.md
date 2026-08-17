@@ -73,13 +73,55 @@ Lesson 05 covers `map`, `filter`, and `reduce`, which replace most hand-written
 loops with something shorter and harder to get wrong. Write the loops here so
 you understand what those methods are doing — then mostly stop writing them.
 
-## Your task
+## What to build
 
-Implement everything in `exercise.js`.
+`solution.js` is empty. Write these with explicit loops and branches — the array
+methods that would shortcut most of them arrive in lesson 05.
+
+### `fizzbuzz(n)`
+Numbers `1..n` as an array of strings. Multiples of 3 → `'Fizz'`, of 5 →
+`'Buzz'`, of both → `'FizzBuzz'`, otherwise the number as a string. Mind the
+order: check 15 before 3 and 5.
+`fizzbuzz(5)` → `['1', '2', 'Fizz', '4', 'Buzz']`
+
+### `grade(score)`
+Letter grade out of 100: 90+ `'A'`, 80+ `'B'`, 70+ `'C'`, 60+ `'D'`, else
+`'F'`. Out of range (below 0 or above 100) → `null`. Write it with guard
+clauses — no `else`, no nesting.
+
+### `dayType(day)`
+`'weekend'` for `'sat'`/`'sun'`, `'weekday'` for the other five, `null` for
+anything else. Use a `switch`, with deliberate fall-through for the shared cases.
+
+### `sumEven(numbers)`
+Sum only the even numbers, using a loop with `continue` to skip the odd ones.
+Remember that `0` and negatives are even too.
+`sumEven([1, 2, 3, 4])` → `6`
+
+### `firstNegativeIndex(numbers)`
+Index of the first negative number, or `-1` if there isn't one. Stop looking the
+moment you find it.
+`firstNegativeIndex([1, 2, -3, -4])` → `2`
+
+### `countdown(n)`
+Count down from `n` to 1 as an array, using a `while` loop. `n < 1` → `[]`.
+`countdown(3)` → `[3, 2, 1]`
+
+### `halvingSteps(n)`
+Repeatedly halve `n` with integer division until it reaches 1, and return how
+many halvings that took.
+`halvingSteps(8)` → `3` (8 → 4 → 2 → 1) · `halvingSteps(10)` → `3` · `halvingSteps(1)` → `0`
+
+## Running it
+
+From inside this folder:
 
 ```bash
-node --test --watch .
+node --test --watch
 ```
+
+That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+while anything is still red.
 
 ## Going deeper
 

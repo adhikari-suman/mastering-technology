@@ -69,13 +69,49 @@ Boolean("")      // false
 
 Explicit conversion is a feature. Implicit conversion is lesson 02's problem.
 
-## Your task
+## What to build
 
-Open `exercise.js` and implement every function. Then:
+`solution.js` is empty. Export each of these. The examples below are
+illustrative — `solution.test.js` is the authority.
+
+### `typeOf(value)`
+Like `typeof`, but honest: `'null'` for `null`, `'array'` for arrays, otherwise
+the normal `typeof` string.
+`typeOf(null)` → `'null'` · `typeOf([1,2])` → `'array'` · `typeOf('hi')` → `'string'`
+
+### `toNumber(value)`
+Convert to a number, but return `null` rather than letting `NaN` escape into the
+rest of the program.
+`toNumber('42')` → `42` · `toNumber('42abc')` → `null` · `toNumber(true)` → `1`
+
+### `isReallyNaN(value)`
+True only when the value **is** `NaN`. No coercion — the old global `isNaN`
+would say `true` for `'hello'`, and that's the bug you're avoiding.
+`isReallyNaN(NaN)` → `true` · `isReallyNaN('hello')` → `false`
+
+### `describeNumber(n)`
+Classify a number as `'integer'`, `'float'`, `'infinite'`, or `'not a number'`
+(the last one covers both non-numbers and `NaN` itself).
+`describeNumber(42)` → `'integer'` · `describeNumber(Infinity)` → `'infinite'`
+
+### `formatIntro(name, age)`
+Build a sentence with a template literal, not `+` concatenation.
+`formatIntro('Ada', 36)` → `'Ada is 36 years old.'`
+
+### `almostEqual(a, b, epsilon = 1e-9)`
+Compare two floats safely: true when they differ by less than `epsilon`.
+`almostEqual(0.1 + 0.2, 0.3)` → `true`
+
+## Running it
+
+From inside this folder:
 
 ```bash
-node --test --watch .
+node --test --watch
 ```
+
+That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+while anything is still red.
 
 ## Going deeper
 

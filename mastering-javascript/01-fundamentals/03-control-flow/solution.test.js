@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
+import * as solution from './solution.js';
+
+// Pulled off the namespace rather than destructured in the import itself:
+// a blank solution.js then shows up as readable per-test failures instead
+// of one module-load crash.
+const {
   fizzbuzz,
   grade,
   dayType,
@@ -8,7 +13,7 @@ import {
   firstNegativeIndex,
   countdown,
   halvingSteps,
-} from './exercise.js';
+} = solution;
 
 test('fizzbuzz: the first fifteen', () => {
   assert.deepEqual(fizzbuzz(15), [

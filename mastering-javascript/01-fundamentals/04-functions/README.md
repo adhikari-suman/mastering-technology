@@ -92,10 +92,60 @@ returned. The variable lives as long as something references it. That's a
 module 02 is devoted to it. For now, just make it work and notice that each
 call to `makeCounter()` gets a fresh, independent `count`.
 
-## Your task
+## What to build
 
-Implement everything in `exercise.js`. The comments specify *which form* to use
-for the first few — the point is to write all three by hand.
+`solution.js` is empty. The first three specify *which form* to use — the point
+is to write all three by hand, not to pick a favourite.
+
+### `square(n)`
+Write this as a function **declaration**. `square(4)` → `16`
+
+### `cube(n)`
+Write this as a function **expression** assigned to a `const`. `cube(3)` → `27`
+
+### `double(n)`
+Write this as an **arrow** function with an implicit return — no braces.
+`double(5)` → `10`
+
+### `makeGreeting(name, greeting)`
+`greeting` defaults to `'Hello'`. Put the default in the parameter list, not in
+the body.
+`makeGreeting('Ada')` → `'Hello, Ada!'` · `makeGreeting('Ada', 'Howdy')` → `'Howdy, Ada!'`
+
+### `sumAll(...numbers)`
+Sum any number of arguments using rest parameters. No arguments → `0`.
+`sumAll(1, 2, 3)` → `6`
+
+### `applyTwice(fn, value)`
+Apply `fn` to `value` twice. Your first higher-order function.
+`applyTwice(n => n + 3, 1)` → `7`
+
+### `makeAdder(amount)`
+Return a **new function** that adds `amount` to whatever it's given. Two adders
+must not interfere with each other.
+`makeAdder(5)(10)` → `15`
+
+### `makeCounter()`
+Return a counter function. Each call returns the next number, starting at 1.
+Two separate counters must each have their own independent count — that
+independence is the closure doing its job.
+`const next = makeCounter(); next(); next()` → `1`, then `2`
+
+### `makePoint(x, y)`
+An arrow function with an implicit return of an **object literal**. Remember the
+parentheses, or the braces are read as a function body.
+`makePoint(1, 2)` → `{ x: 1, y: 2 }`
+
+## Running it
+
+From inside this folder:
+
+```bash
+node --test --watch
+```
+
+That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+while anything is still red.
 
 ## Going deeper
 

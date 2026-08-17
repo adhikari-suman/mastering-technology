@@ -83,10 +83,60 @@ takes an accumulator and each element, and returns the next accumulator:
 **Always pass the initial value** (that trailing `0`). Without it, reduce uses
 the first element as the seed and throws on an empty array.
 
-## Your task
+## What to build
 
-Implement everything in `exercise.js`. Reach for the array methods, not
-hand-rolled `for` loops — except in `chunk`, where a loop is genuinely clearer.
+`solution.js` is empty. Reach for the array methods rather than hand-rolled
+loops — except in `chunk`, where a loop is genuinely clearer.
+
+**None of these may mutate their arguments.** Several tests check exactly that.
+
+### `doubleAll(numbers)`
+`doubleAll([1, 2, 3])` → `[2, 4, 6]`
+
+### `evensOnly(numbers)`
+`evensOnly([1, 2, 3, 4])` → `[2, 4]`
+
+### `total(numbers)`
+Sum with `reduce`. Don't forget the initial value — `total([])` must be `0`, not
+a crash.
+
+### `findUser(users, id)`
+The user with that `id`, or `undefined` if there's no match.
+
+### `sortByAge(users)`
+A **new** array sorted by `age`, youngest first. `sort` mutates, so copy first.
+
+### `names(users)`
+`names([{ name: 'Ada' }, { name: 'Grace' }])` → `['Ada', 'Grace']`
+
+### `merge(a, b)`
+`merge([1, 2], [3])` → `[1, 2, 3]`, without touching either input.
+
+### `firstAndRest(items)`
+Split using array destructuring.
+`firstAndRest([1, 2, 3])` → `{ first: 1, rest: [2, 3] }` · `firstAndRest([])` → `{ first: undefined, rest: [] }`
+
+### `allPositive(numbers)`
+Are they all positive? An empty array is vacuously `true`; `0` is not positive.
+
+### `chunk(items, size)`
+Split into chunks of at most `size`. The last chunk may be shorter.
+`chunk([1, 2, 3, 4, 5], 2)` → `[[1, 2], [3, 4], [5]]`
+
+### `tally(items)`
+Count how many times each value appears.
+`tally(['a', 'b', 'a'])` → `{ a: 2, b: 1 }`
+
+## Running it
+
+From inside this folder:
+
+```bash
+node --test --watch
+```
+
+That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+while anything is still red.
 
 ## Going deeper
 

@@ -115,9 +115,64 @@ Arrow functions don't get their own `this`, which makes them wrong for methods
 and right for callbacks. Module 02 covers all four binding rules properly. For
 now: use `method() {}` shorthand for methods, arrows for callbacks.
 
-## Your task
+## What to build
 
-Implement everything in `exercise.js`. Nothing may mutate its arguments.
+`solution.js` is empty. **No function here may mutate its arguments** — several
+tests check the original object afterwards.
+
+### `getProperty(obj, key)`
+Read a property whose name is only known at runtime. Dot notation can't do this.
+`getProperty({ a: 1 }, 'a')` → `1` · missing key → `undefined`
+
+### `fullName(person)`
+Use destructuring in the parameter list.
+`fullName({ first: 'Ada', last: 'Lovelace' })` → `'Ada Lovelace'`
+
+### `deepGet(obj, path)`
+Read a nested value from a dotted path. It must never throw, however broken the
+path is.
+`deepGet({ a: { b: { c: 1 } } }, 'a.b.c')` → `1` · `deepGet({ a: {} }, 'a.b.c')` → `undefined`
+
+### `withUpdated(obj, key, value)`
+A **new** object with `key` set to `value`; the original untouched.
+`withUpdated({ a: 1 }, 'b', 2)` → `{ a: 1, b: 2 }`
+
+### `omit(obj, key)`
+A **new** object without `key`. Rest destructuring does this in one line, but
+any approach works.
+`omit({ a: 1, b: 2 }, 'b')` → `{ a: 1 }`
+
+### `invert(obj)`
+Values become keys, keys become values.
+`invert({ a: '1', b: '2' })` → `{ '1': 'a', '2': 'b' }`
+
+### `filterValues(obj, predicate)`
+Keep only the entries whose **value** passes the predicate.
+`filterValues({ a: 1, b: 5 }, n => n > 3)` → `{ b: 5 }`
+
+### `mergeObjects(a, b)`
+Merge into a new object; keys in `b` win. Shallow is fine.
+
+### `makeRect(width, height)`
+An object with `width`, `height`, and an `area()` method that uses `this`. Use
+method shorthand, **not** an arrow function — one test reassigns `rect.width`
+and expects `area()` to notice.
+`makeRect(3, 4).area()` → `12`
+
+### `deepCopy(obj)`
+Copy so that mutating the result at **any** depth can't affect the original.
+There's a built-in for this.
+
+## Running it
+
+From inside this folder:
+
+```bash
+node --test --watch
+```
+
+That re-runs on every save. Drop `--watch` for a single run — it exits non-zero
+while anything is still red.
 
 ## Going deeper
 

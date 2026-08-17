@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
+import * as solution from './solution.js';
+
+// Pulled off the namespace rather than destructured in the import itself:
+// a blank solution.js then shows up as readable per-test failures instead
+// of one module-load crash.
+const {
   doubleAll,
   evensOnly,
   total,
@@ -12,7 +17,7 @@ import {
   allPositive,
   chunk,
   tally,
-} from './exercise.js';
+} = solution;
 
 const USERS = [
   { id: 1, name: 'Ada', age: 36 },
