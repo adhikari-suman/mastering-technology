@@ -163,10 +163,22 @@ lesson 06's pipelines possible.
 | 05  | Currying              | `curry`, `partial`, `unary` — and the `map(parseInt)` fix          |
 | 06  | Composition           | `pipe`, `compose`, `tap`, and why composition wants unary functions |
 
+### Part 03 — Objects and prototypes ✅ available now
+
+There are no classes underneath — only objects linked to other objects. This
+Part builds that model from the bottom, then shows `class` as the syntax over it.
+
+| #   | Lesson                | You'll be able to                                              |
+| --- | --------------------- | ---------------------------------------------------------------- |
+| 01  | The prototype chain   | Walk it, and know why writing never follows it                    |
+| 02  | Constructors and `new`| Implement `new` and `instanceof` yourself                         |
+| 03  | Classes               | `#private`, statics, accessors, and what `class` actually changes |
+| 04  | Inheritance           | `extends`/`super`, the pre-class pattern, mixins                  |
+| 05  | Property descriptors  | The four attributes, accessors, and a real `deepFreeze`           |
+| 06  | Symbols               | Collision-proof keys, `Symbol.iterator`, `toPrimitive`            |
+
 ### Coming next (I'll build these as you get there)
 
-- **Part 03 — Objects and prototypes**: the prototype chain, `class` as sugar,
-  inheritance, `Object.create`, property descriptors, getters/setters, `Symbol`.
 - **Part 04 — Async**: the event loop and the two queues, callbacks →
   promises → `async`/`await`, error propagation, `Promise.all`/`race`/
   `allSettled`, cancellation with `AbortController`, generators and async
