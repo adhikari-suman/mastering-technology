@@ -112,7 +112,7 @@ fn();   // TypeError — `this` is undefined
 ```
 
 Arrow functions don't get their own `this`, which makes them wrong for methods
-and right for callbacks. Module 02 covers all four binding rules properly. For
+and right for callbacks. Part 02 covers all four binding rules properly. For
 now: use `method() {}` shorthand for methods, arrows for callbacks.
 
 ## What to build

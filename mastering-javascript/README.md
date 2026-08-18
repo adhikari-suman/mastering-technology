@@ -65,7 +65,7 @@ npm run clean     # delete solution.js                     (destructive)
 ```
 
 Each takes an optional filter that substring-matches the lesson path, so you can
-act on one lesson or one module instead of all of them:
+act on one lesson or one Part instead of all of them:
 
 ```bash
 npm run reset -- 03-control
@@ -135,7 +135,7 @@ each answer is what it is. Green tests you can't explain are not mastery.
 
 ## Curriculum
 
-### Module 01 — Fundamentals ✅ available now
+### Part 01 — Fundamentals ✅ available now
 
 The vocabulary. Nothing here is optional; everything later assumes it.
 
@@ -150,22 +150,22 @@ The vocabulary. Nothing here is optional; everything later assumes it.
 
 ### Coming next (I'll build these as you get there)
 
-- **Module 02 — Functions in depth**: closures, higher-order functions, `this`
+- **Part 02 — Functions in depth**: closures, higher-order functions, `this`
   and the four binding rules, `call`/`apply`/`bind`, recursion, currying.
-- **Module 03 — Objects and prototypes**: the prototype chain, `class` as sugar,
+- **Part 03 — Objects and prototypes**: the prototype chain, `class` as sugar,
   inheritance, `Object.create`, property descriptors, getters/setters, `Symbol`.
-- **Module 04 — Async**: the event loop and the two queues, callbacks →
+- **Part 04 — Async**: the event loop and the two queues, callbacks →
   promises → `async`/`await`, error propagation, `Promise.all`/`race`/
   `allSettled`, cancellation with `AbortController`, generators and async
   iterators, and implementing a Promise from scratch.
-- **Module 05 — Collections and data**: `Map`, `Set`, `WeakMap`, iterators and
+- **Part 05 — Collections and data**: `Map`, `Set`, `WeakMap`, iterators and
   the iteration protocol, JSON, structured cloning, immutability patterns.
-- **Module 06 — Errors and robustness**: `Error` subclassing, `throw` vs.
+- **Part 06 — Errors and robustness**: `Error` subclassing, `throw` vs.
   return-an-error, `try/finally`, unhandled rejections, defensive boundaries.
-- **Module 07 — Modules and tooling**: ESM vs. CommonJS, named vs. default
+- **Part 07 — Modules and tooling**: ESM vs. CommonJS, named vs. default
   exports, circular imports, `package.json` exports, bundlers, source maps.
-- **Module 08 — Advanced**: `Proxy` and `Reflect`, tagged templates,
+- **Part 08 — Advanced**: `Proxy` and `Reflect`, tagged templates,
   memory model and leaks, micro-benchmarking honestly, metaprogramming.
 
-Ask me to build the next module whenever you're ready — or ask for extra drills
+Ask me to build the next Part whenever you're ready — or ask for extra drills
 on any lesson that didn't stick.

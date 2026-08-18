@@ -115,5 +115,5 @@ over from scratch. For a single run instead of a watcher, `cd` in here and run
    ```js
    for (let i = 0; i < 3; i++) setTimeout(() => console.log(i), 0);
    ```
-   (This is *the* classic JS interview question. Module 02 explains it properly.)
+   (This is *the* classic JS interview question. Part 02 explains it properly.)
 2. Rewrite `fizzbuzz` without a single `if`. Is it better? Be honest.

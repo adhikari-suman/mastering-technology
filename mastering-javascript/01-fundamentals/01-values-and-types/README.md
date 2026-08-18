@@ -14,7 +14,7 @@ stops being weird.
 | `undefined` | `undefined`          | "This has no value **yet**." Assigned by JS.    |
 | `null`      | `null`               | "This has **no** value." Assigned by you.       |
 | `bigint`    | `9007199254740993n`  | For integers beyond `Number.MAX_SAFE_INTEGER`.  |
-| `symbol`    | `Symbol('id')`       | Unique keys. Module 03.                         |
+| `symbol`    | `Symbol('id')`       | Unique keys. Part 03.                         |
 
 Everything else — arrays, functions, dates, regexes, plain `{}` — is an object.
 

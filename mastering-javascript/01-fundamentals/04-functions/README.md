@@ -17,7 +17,7 @@ const cube = function (n) {
   return n * n * n;
 };
 
-// 3. Arrow — concise, and it does NOT get its own `this` (module 02)
+// 3. Arrow — concise, and it does NOT get its own `this` (Part 02)
 const double = (n) => n * 2;
 ```
 
@@ -89,7 +89,7 @@ next();  // 2
 The returned arrow still has access to `count` after `makeCounter` has
 returned. The variable lives as long as something references it. That's a
 **closure**, and it's the single most important concept in the language —
-module 02 is devoted to it. For now, just make it work and notice that each
+Part 02 is devoted to it. For now, just make it work and notice that each
 call to `makeCounter()` gets a fresh, independent `count`.
 
 ## What to build

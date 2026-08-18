@@ -7,7 +7,7 @@
  *   npm run clean             delete solution.js                     (destructive)
  *
  * All four take an optional filter that substring-matches the lesson path, so
- * you can act on one lesson or one module instead of everything:
+ * you can act on one lesson or one Part instead of everything:
  *
  *   npm run reset -- 03-control
  *   npm run clean -- 01-fundamentals
@@ -33,19 +33,19 @@ const filter = (COMMANDS.has(positional[0]) ? positional[1] : positional[0]) ?? 
 /** Every lesson folder that ships an exercise.js, as { name, exercise, solution }. */
 function findLessons() {
   const lessons = [];
-  const modules = readdirSync(ROOT, { withFileTypes: true })
+  const parts = readdirSync(ROOT, { withFileTypes: true })
     .filter((e) => e.isDirectory() && /^\d\d-/.test(e.name))
     .map((e) => e.name)
     .sort();
 
-  for (const mod of modules) {
-    for (const lesson of readdirSync(join(ROOT, mod)).sort()) {
-      const exercise = join(ROOT, mod, lesson, 'exercise.js');
+  for (const part of parts) {
+    for (const lesson of readdirSync(join(ROOT, part)).sort()) {
+      const exercise = join(ROOT, part, lesson, 'exercise.js');
       if (!existsSync(exercise)) continue;
       lessons.push({
-        name: `${mod}/${lesson}`,
+        name: `${part}/${lesson}`,
         exercise,
-        solution: join(ROOT, mod, lesson, 'solution.js'),
+        solution: join(ROOT, part, lesson, 'solution.js'),
       });
     }
   }

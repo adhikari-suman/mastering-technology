@@ -33,21 +33,21 @@ function inferFilter() {
   const from = process.env.INIT_CWD ?? process.cwd();
   const rel = relative(ROOT, from);
   if (!rel || rel.startsWith('..')) return '';          // outside the project
-  const [mod, lesson] = rel.split(sep);
-  return lesson ? `${mod}/${lesson}` : '';
+  const [part, lesson] = rel.split(sep);
+  return lesson ? `${part}/${lesson}` : '';
 }
 
 const filter = inferFilter();
 
 const lessons = [];
-for (const mod of readdirSync(ROOT, { withFileTypes: true })
+for (const part of readdirSync(ROOT, { withFileTypes: true })
   .filter((e) => e.isDirectory() && /^\d\d-/.test(e.name))
   .map((e) => e.name)
   .sort()) {
-  for (const lesson of readdirSync(join(ROOT, mod)).sort()) {
-    if (!existsSync(join(ROOT, mod, lesson, 'exercise.js'))) continue;
-    const name = `${mod}/${lesson}`;
-    if (name.includes(filter)) lessons.push({ name, dir: join(ROOT, mod, lesson) });
+  for (const lesson of readdirSync(join(ROOT, part)).sort()) {
+    if (!existsSync(join(ROOT, part, lesson, 'exercise.js'))) continue;
+    const name = `${part}/${lesson}`;
+    if (name.includes(filter)) lessons.push({ name, dir: join(ROOT, part, lesson) });
   }
 }
 
