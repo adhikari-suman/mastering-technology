@@ -218,10 +218,22 @@ Failure as a design concern rather than an afterthought.
 | 05  | Validation            | Parse don't validate; collect every error; boundaries             |
 | 06  | Retry and cleanup     | Backoff, idempotence, circuit breakers, reverse-order release     |
 
+### Part 07 — Modules and tooling ✅ available now
+
+How code becomes a program. Several lessons ship `fixtures/` — real modules the
+exercises import, because module semantics can't be learned from one file.
+
+| #   | Lesson              | You'll be able to                                              |
+| --- | ------------------- | ---------------------------------------------------------------- |
+| 01  | ES modules          | Live bindings, namespaces, singletons                             |
+| 02  | CommonJS and interop | `createRequire`, `__dirname` in ESM, which system a file is       |
+| 03  | Dynamic `import()`  | Lazy loading, computed specifiers, optional dependencies          |
+| 04  | Circular imports    | Why one side hits the TDZ and the other doesn't                   |
+| 05  | Package entry points | Implement `exports` resolution, conditions and wildcards          |
+| 06  | Side effects        | What blocks tree shaking, and the `sideEffects` field             |
+
 ### Coming next (I'll build these as you get there)
 
-- **Part 07 — Modules and tooling**: ESM vs. CommonJS, named vs. default
-  exports, circular imports, `package.json` exports, bundlers, source maps.
 - **Part 08 — Advanced**: `Proxy` and `Reflect`, tagged templates,
   memory model and leaks, micro-benchmarking honestly, metaprogramming.
 
