@@ -1,16 +1,4 @@
 /**
- * Lesson 02 — Operators and Coercion
- *
- * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
- *
- * Start by duplicating it:
- *     cp exercise.js solution.js
- *
- * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
- */
-
-/**
  * PART 1 — Predict, then verify.
  *
  * Replace every 'TODO' with what you believe the expression evaluates to.
@@ -18,22 +6,22 @@
  * wrong is the most useful thing that can happen in this lesson.
  */
 export const PREDICTIONS = {
-  'null == undefined': 'TODO',
-  'null === undefined': 'TODO',
-  'null == 0': 'TODO',
-  'null >= 0': 'TODO',
-  '0 == "0"': 'TODO',
-  '0 == ""': 'TODO',
-  '"" == "0"': 'TODO',
-  'NaN == NaN': 'TODO',
-  '[] == false': 'TODO',
-  'typeof NaN': 'TODO',
-  '1 + "2"': 'TODO',
-  '"3" - 1': 'TODO',
-  '"3" * "4"': 'TODO',
-  '[] + {}': 'TODO',
-  'Boolean([])': 'TODO',
-  'Boolean("false")': 'TODO',
+  "null == undefined": true,
+  "null === undefined": false,
+  "null == 0": false,
+  "null >= 0": true,
+  '0 == "0"': true, // 0 == "0" => 0 == 0 => true
+  '0 == ""': true, // 0 == "" => 0 == 0 => true
+  '"" == "0"': false, // string vs string false
+  "NaN == NaN": false, // NaN vs NaN false
+  "[] == false": true, // [] == false => [] == 0 => "" == 0 => 0 == 0
+  "typeof NaN": "number", // number
+  '1 + "2"': "12", // 1 + "2"
+  '"3" - 1': 2,
+  '"3" * "4"': 12,
+  "[] + {}": "[object Object]",
+  "Boolean([])": true,
+  'Boolean("false")': true,
 };
 
 /**
@@ -45,8 +33,7 @@ export const PREDICTIONS = {
  * let the language convert it for you.
  */
 export function isTruthy(value) {
-  // TODO
-  throw new Error('isTruthy: not implemented');
+  return !!value;
 }
 
 /**
@@ -57,8 +44,7 @@ export function isTruthy(value) {
  * defaultTo(null, 100) -> 100
  */
 export function defaultTo(value, fallback) {
-  // TODO: which operator preserves 0 and ""?
-  throw new Error('defaultTo: not implemented');
+  return value ?? fallback;
 }
 
 /**
@@ -69,8 +55,7 @@ export function defaultTo(value, fallback) {
  * orDefault('hi', 'x') -> 'hi'
  */
 export function orDefault(value, fallback) {
-  // TODO
-  throw new Error('orDefault: not implemented');
+  return value || fallback;
 }
 
 /**
@@ -81,8 +66,14 @@ export function orDefault(value, fallback) {
  * addNumeric('10', 'x') -> null
  */
 export function addNumeric(a, b) {
-  // TODO
-  throw new Error('addNumeric: not implemented');
+  a = Number(a);
+  b = Number(b);
+
+  if (Number.isNaN(a) || Number.isNaN(b)) {
+    return null;
+  }
+
+  return a + b;
 }
 
 /**
@@ -90,8 +81,13 @@ export function addNumeric(a, b) {
  * Return a negative number if a sorts before b, positive if after, 0 if equal.
  */
 export function compare(a, b) {
-  // TODO
-  throw new Error('compare: not implemented');
+  if (a < b) {
+    return -1;
+  } else if (a > b) {
+    return 1;
+  }
+
+  return 0;
 }
 
 /**
@@ -99,6 +95,5 @@ export function compare(a, b) {
  * This is the one place `==` earns its keep — but `===` twice is fine too.
  */
 export function isNullish(value) {
-  // TODO
-  throw new Error('isNullish: not implemented');
+  return value == null; // for == null and undefined are same thing.
 }
