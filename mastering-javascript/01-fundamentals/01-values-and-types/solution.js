@@ -1,16 +1,4 @@
 /**
- * Lesson 01 — Values and Types
- *
- * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
- *
- * Start by duplicating it:
- *     cp exercise.js solution.js
- *
- * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
- */
-
-/**
  * Like `typeof`, but honest.
  * Returns 'null' for null and 'array' for arrays; otherwise the normal typeof.
  *
@@ -19,8 +7,13 @@
  * typeOf('hi')  -> 'string'
  */
 export function typeOf(value) {
-  // TODO: handle null and arrays before falling back to typeof
-  throw new Error('typeOf: not implemented');
+  if (Array.isArray(value)) {
+    return "array";
+  } else if (value === null) {
+    return "null";
+  } else {
+    return typeof value;
+  }
 }
 
 /**
@@ -32,8 +25,9 @@ export function typeOf(value) {
  * toNumber(true)    -> 1
  */
 export function toNumber(value) {
-  // TODO
-  throw new Error('toNumber: not implemented');
+  const converted = Number(value);
+
+  return Number.isNaN(converted) ? null : converted;
 }
 
 /**
@@ -43,8 +37,7 @@ export function toNumber(value) {
  * isReallyNaN('hello') -> false   (the old global isNaN would say true)
  */
 export function isReallyNaN(value) {
-  // TODO
-  throw new Error('isReallyNaN: not implemented');
+  return Number.isNaN(value);
 }
 
 /**
@@ -56,8 +49,17 @@ export function isReallyNaN(value) {
  * 'float'        — anything else
  */
 export function describeNumber(n) {
-  // TODO
-  throw new Error('describeNumber: not implemented');
+  const converted = Number(n);
+
+  if (typeof n !== "number" || Number.isNaN(converted)) {
+    return "not a number";
+  } else if (Math.abs(converted) === Infinity) {
+    return "infinite";
+  } else if (Number.isInteger(converted)) {
+    return "integer";
+  }
+
+  return "float";
 }
 
 /**
@@ -66,8 +68,7 @@ export function describeNumber(n) {
  * formatIntro('Ada', 36) -> 'Ada is 36 years old.'
  */
 export function formatIntro(name, age) {
-  // TODO
-  throw new Error('formatIntro: not implemented');
+  return `${name} is ${age} years old.`;
 }
 
 /**
@@ -78,6 +79,7 @@ export function formatIntro(name, age) {
  * almostEqual(0.1, 0.2)       -> false
  */
 export function almostEqual(a, b, epsilon = 1e-9) {
-  // TODO
-  throw new Error('almostEqual: not implemented');
+  const difference = a - b;
+
+  return Math.abs(difference) < epsilon;
 }
