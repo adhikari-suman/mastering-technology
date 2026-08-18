@@ -139,11 +139,11 @@ original object afterwards.
 
 ## Running it
 
-Make your working copy once, then start the watcher from the repo root:
+Both of these run from inside this folder:
 
 ```bash
-cp exercise.js solution.js          # from inside this folder
-npm run watch -- 06-objects
+cp exercise.js solution.js   # once
+npm run watch                # scopes to this lesson automatically
 ```
 
 `exercise.js` is never edited, so that `cp` is also how you start the lesson

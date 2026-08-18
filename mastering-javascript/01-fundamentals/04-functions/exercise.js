@@ -7,7 +7,8 @@
  *     cp exercise.js solution.js
  *
  * Then write your answers in solution.js, deleting each `throw` as you go.
- * Then run `npm run watch -- 04-functions` from the repo root.
+ * See README.md for how to run the tests. (Don't copy run commands out of
+ * this header into your solution.js — they go stale; the README doesn't.)
  */
 
 /**

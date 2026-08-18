@@ -34,10 +34,13 @@ Work one lesson at a time, from inside its folder:
 
 ```bash
 cd 01-fundamentals/01-values-and-types
-cp exercise.js solution.js                    # your working copy, once per lesson
-cd ../..
-npm run watch -- 01-values-and-types          # the main loop; re-runs on save
+cp exercise.js solution.js   # your working copy, once per lesson
+npm run watch                # the main loop; re-runs on save
 ```
+
+`npm run watch` scopes itself to whichever lesson folder you run it from. From
+the project root it watches everything. To target a lesson from elsewhere, name
+it: `npm run watch -- 03-control`.
 
 The tests import `solution.js`, so until you make that copy the suite reports a
 single clear failure telling you to. Because `exercise.js` is never edited, that

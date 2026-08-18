@@ -1,8 +1,9 @@
 /**
  * Re-runs `node --test` whenever a file in a lesson folder changes.
  *
- *   npm run watch                 watch every lesson, run the whole suite
- *   npm run watch -- 03-control   watch one lesson, run just its tests
+ *   npm run watch                 from inside a lesson folder: just that lesson
+ *                                 from the project root: every lesson
+ *   npm run watch -- 03-control   watch one lesson from anywhere
  *
  * Why this exists instead of `node --test --watch`: Node's own watcher tracks
  * the *module graph* of the test files. The moment your solution.js fails to
@@ -16,11 +17,27 @@
  */
 import { readdirSync, existsSync, watch } from 'node:fs';
 import { spawn } from 'node:child_process';
-import { join, dirname } from 'node:path';
+import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const filter = process.argv[2] ?? '';
+
+/**
+ * Scope: an explicit argument wins. Failing that, if you ran this from inside
+ * a lesson folder, watch that lesson — `npm run watch` with no argument should
+ * do the obvious thing. npm rewrites cwd to the package root before running a
+ * script, but leaves the directory you actually typed it in as INIT_CWD.
+ */
+function inferFilter() {
+  if (process.argv[2]) return process.argv[2];
+  const from = process.env.INIT_CWD ?? process.cwd();
+  const rel = relative(ROOT, from);
+  if (!rel || rel.startsWith('..')) return '';          // outside the project
+  const [mod, lesson] = rel.split(sep);
+  return lesson ? `${mod}/${lesson}` : '';
+}
+
+const filter = inferFilter();
 
 const lessons = [];
 for (const mod of readdirSync(ROOT, { withFileTypes: true })

@@ -86,11 +86,11 @@ examples, edge cases — is in the JSDoc above the corresponding stub in
 
 ## Running it
 
-Make your working copy once, then start the watcher from the repo root:
+Both of these run from inside this folder:
 
 ```bash
-cp exercise.js solution.js          # from inside this folder
-npm run watch -- 01-values-and-types
+cp exercise.js solution.js   # once
+npm run watch                # scopes to this lesson automatically
 ```
 
 `exercise.js` is never edited, so that `cp` is also how you start the lesson
