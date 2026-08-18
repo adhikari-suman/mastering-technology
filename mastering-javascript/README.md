@@ -177,12 +177,22 @@ Part builds that model from the bottom, then shows `class` as the syntax over it
 | 05  | Property descriptors  | The four attributes, accessors, and a real `deepFreeze`           |
 | 06  | Symbols               | Collision-proof keys, `Symbol.iterator`, `toPrimitive`            |
 
+### Part 04 — Async ✅ available now
+
+The hardest Part, and the one that pays off most. It ends with you implementing
+a promise from scratch — after which none of it is a black box.
+
+| #   | Lesson              | You'll be able to                                              |
+| --- | ------------------- | ---------------------------------------------------------------- |
+| 01  | The event loop      | Predict any sync/microtask/macrotask ordering                     |
+| 02  | Callbacks           | Error-first style, `promisify`, and why `try/catch` failed        |
+| 03  | Promises            | Chaining, error propagation, `retry`, `withTimeout`               |
+| 04  | `async`/`await`     | Spot accidental serialisation; serial vs parallel on purpose      |
+| 05  | Combinators         | Write `all`/`allSettled`/`race`/`any`, plus `AbortController`     |
+| 06  | Build a promise     | The full state machine, adoption, and `then` returning a promise  |
+
 ### Coming next (I'll build these as you get there)
 
-- **Part 04 — Async**: the event loop and the two queues, callbacks →
-  promises → `async`/`await`, error propagation, `Promise.all`/`race`/
-  `allSettled`, cancellation with `AbortController`, generators and async
-  iterators, and implementing a Promise from scratch.
 - **Part 05 — Collections and data**: `Map`, `Set`, `WeakMap`, iterators and
   the iteration protocol, JSON, structured cloning, immutability patterns.
 - **Part 06 — Errors and robustness**: `Error` subclassing, `throw` vs.
