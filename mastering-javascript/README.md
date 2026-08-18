@@ -205,10 +205,21 @@ own types work with the language's syntax.
 | 05  | JSON                | Everything it silently drops, replacers, revivers, `structuredClone` |
 | 06  | Immutability        | Nested updates with structural sharing                            |
 
+### Part 06 — Errors and robustness ✅ available now
+
+Failure as a design concern rather than an afterthought.
+
+| #   | Lesson                | You'll be able to                                              |
+| --- | --------------------- | ---------------------------------------------------------------- |
+| 01  | throw / catch / finally | The `finally`-return trap, `cause` chains, normalising throws   |
+| 02  | Error types           | Subclass properly, `code` over `instanceof`, serialise for logs   |
+| 03  | Result vs. throw      | Expected failures as data; when each is right                     |
+| 04  | Async errors          | Missing `await`, floating promises, cleanup that can't mask       |
+| 05  | Validation            | Parse don't validate; collect every error; boundaries             |
+| 06  | Retry and cleanup     | Backoff, idempotence, circuit breakers, reverse-order release     |
+
 ### Coming next (I'll build these as you get there)
 
-- **Part 06 — Errors and robustness**: `Error` subclassing, `throw` vs.
-  return-an-error, `try/finally`, unhandled rejections, defensive boundaries.
 - **Part 07 — Modules and tooling**: ESM vs. CommonJS, named vs. default
   exports, circular imports, `package.json` exports, bundlers, source maps.
 - **Part 08 — Advanced**: `Proxy` and `Reflect`, tagged templates,
