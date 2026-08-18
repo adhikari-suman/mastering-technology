@@ -18,7 +18,7 @@
  * there's nothing in them to lose.
  */
 import { readdirSync, existsSync, copyFileSync, readFileSync, rmSync } from 'node:fs';
-import { join, dirname, relative } from 'node:path';
+import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -28,7 +28,25 @@ const args = process.argv.slice(2);
 const yes = args.includes('--yes');
 const positional = args.filter((a) => !a.startsWith('--'));
 const command = COMMANDS.has(positional[0]) ? positional[0] : 'setup';
-const filter = (COMMANDS.has(positional[0]) ? positional[1] : positional[0]) ?? '';
+const explicitFilter = (COMMANDS.has(positional[0]) ? positional[1] : positional[0]) ?? '';
+
+/**
+ * Scope: an explicit argument wins. Failing that, if you ran this from inside a
+ * Part or a lesson folder, act only on that — running `npm run setup` in one
+ * lesson should not create files across all forty-eight. npm rewrites cwd to
+ * the package root before running a script, but leaves the directory you
+ * actually typed it in as INIT_CWD.
+ */
+function inferFilter() {
+  if (explicitFilter) return explicitFilter;
+  const from = process.env.INIT_CWD ?? process.cwd();
+  const rel = relative(ROOT, from);
+  if (!rel || rel.startsWith('..')) return '';          // at or outside the root
+  const [part, lesson] = rel.split(sep);
+  return lesson ? `${part}/${lesson}` : part;
+}
+
+const filter = inferFilter();
 
 /** Every lesson folder that ships an exercise.js, as { name, exercise, solution }. */
 function findLessons() {
@@ -65,6 +83,14 @@ const lessons = findLessons();
 if (lessons.length === 0) {
   console.error(filter ? `No lesson matches "${filter}".` : 'No lessons found.');
   process.exit(1);
+}
+
+if (command !== 'status') {
+  console.log(
+    filter
+      ? `Scope: ${filter} (${lessons.length} lesson(s))`
+      : `Scope: all ${lessons.length} lessons`,
+  );
 }
 
 if (command === 'status') {
