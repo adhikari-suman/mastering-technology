@@ -1,35 +1,19 @@
 /**
- * Lesson 06 — Objects
- *
- * No function here may mutate its arguments.
- *
- * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
- *
- * Start by duplicating it:
- *     cp exercise.js solution.js
- *
- * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
- */
-
-/**
  * Read a property whose name is only known at runtime.
  * Return undefined if it isn't there.
  *
  * getProperty({ a: 1 }, 'a') -> 1
  */
 export function getProperty(obj, key) {
-  // TODO: dot notation cannot do this
-  throw new Error('getProperty: not implemented');
+  return obj?.[key];
 }
 
 /**
  * fullName({ first: 'Ada', last: 'Lovelace' }) -> 'Ada Lovelace'
  * Use destructuring in the parameter list.
  */
-export function fullName(person) {
-  // TODO
-  throw new Error('fullName: not implemented');
+export function fullName({ first: firstName, last: lastName }) {
+  return `${firstName} ${lastName}`;
 }
 
 /**
@@ -40,8 +24,19 @@ export function fullName(person) {
  * deepGet({ a: {} }, 'a.b.c')              -> undefined
  */
 export function deepGet(obj, path) {
-  // TODO: split the path, then walk it
-  throw new Error('deepGet: not implemented');
+  const keys = path.split(".");
+
+  let current = obj;
+
+  for (let key of keys) {
+    current = current?.[key];
+
+    if (current === undefined) {
+      return undefined;
+    }
+  }
+
+  return current;
 }
 
 /**
@@ -51,8 +46,7 @@ export function deepGet(obj, path) {
  * withUpdated({ a: 1 }, 'a', 9) -> { a: 9 }
  */
 export function withUpdated(obj, key, value) {
-  // TODO
-  throw new Error('withUpdated: not implemented');
+  return { ...obj, [key]: value };
 }
 
 /**
@@ -61,8 +55,9 @@ export function withUpdated(obj, key, value) {
  * omit({ a: 1, b: 2 }, 'b') -> { a: 1 }
  */
 export function omit(obj, key) {
-  // TODO: rest destructuring can do this in one line, but any approach works
-  throw new Error('omit: not implemented');
+  const { [key]: first, ...safe } = obj;
+
+  return safe;
 }
 
 /**
@@ -71,8 +66,9 @@ export function omit(obj, key) {
  * invert({ a: '1', b: '2' }) -> { '1': 'a', '2': 'b' }
  */
 export function invert(obj) {
-  // TODO: entries -> map -> fromEntries
-  throw new Error('invert: not implemented');
+  return Object.fromEntries(
+    Object.entries(obj).map((entry) => entry.reverse()),
+  );
 }
 
 /**
@@ -81,8 +77,9 @@ export function invert(obj) {
  * filterValues({ a: 1, b: 5 }, (n) => n > 3) -> { b: 5 }
  */
 export function filterValues(obj, predicate) {
-  // TODO
-  throw new Error('filterValues: not implemented');
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key, val]) => predicate(val)),
+  );
 }
 
 /**
@@ -90,8 +87,7 @@ export function filterValues(obj, predicate) {
  * Shallow is fine.
  */
 export function mergeObjects(a, b) {
-  // TODO
-  throw new Error('mergeObjects: not implemented');
+  return { ...a, ...b };
 }
 
 /**
@@ -101,8 +97,13 @@ export function mergeObjects(a, b) {
  * makeRect(3, 4).area() -> 12
  */
 export function makeRect(width, height) {
-  // TODO
-  throw new Error('makeRect: not implemented');
+  return {
+    width,
+    height,
+    area: function () {
+      return this.width * this.height;
+    },
+  };
 }
 
 /**
@@ -110,6 +111,22 @@ export function makeRect(width, height) {
  * affect the original.
  */
 export function deepCopy(obj) {
-  // TODO: there is a built-in for this
-  throw new Error('deepCopy: not implemented');
+  // base case: primitive | null | undefined
+  if (obj == null || typeof obj !== "object") {
+    return obj;
+  }
+
+  // arrays are objects too so must be handled first
+  if (Array.isArray(obj)) {
+    const result = [];
+    for (let item of obj) {
+      result.push(deepCopy(item));
+    }
+    return result;
+  }
+
+  // Plain object
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, val]) => [key, deepCopy(val)]),
+  );
 }
