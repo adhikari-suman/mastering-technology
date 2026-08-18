@@ -11,7 +11,7 @@
  *     cp exercise.js solution.js
  *
  * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
+ * Then run `npm run watch -- 05-arrays` from the repo root.
  */
 
 /**

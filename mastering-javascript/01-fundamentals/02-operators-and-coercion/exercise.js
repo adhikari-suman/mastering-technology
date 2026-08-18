@@ -7,7 +7,7 @@
  *     cp exercise.js solution.js
  *
  * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
+ * Then run `npm run watch -- 02-operators-and-coercion` from the repo root.
  */
 
 /**

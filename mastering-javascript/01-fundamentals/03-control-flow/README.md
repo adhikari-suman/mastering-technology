@@ -94,16 +94,20 @@ shortcut most of them arrive in lesson 05.
 
 ## Running it
 
-From inside this folder, make your working copy and start the watcher:
+Make your working copy once, then start the watcher from the repo root:
 
 ```bash
-cp exercise.js solution.js
-node --test --watch
+cp exercise.js solution.js          # from inside this folder
+npm run watch -- 03-control-flow
 ```
 
-`exercise.js` is never edited, so that first command is also how you start the
-lesson over from scratch. Drop `--watch` for a single run — it exits non-zero
-while anything is still red.
+`exercise.js` is never edited, so that `cp` is also how you start the lesson
+over from scratch. For a single run instead of a watcher, `cd` in here and run
+`node --test` — it exits non-zero while anything is still red.
+
+> Don't use `node --test --watch`. Node's watcher follows the module graph, so
+> the moment `solution.js` has a syntax error it stops being watched — you fix
+> the typo and nothing re-runs. `npm run watch` watches the folder instead.
 
 ## Going deeper
 

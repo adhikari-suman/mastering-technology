@@ -34,8 +34,9 @@ Work one lesson at a time, from inside its folder:
 
 ```bash
 cd 01-fundamentals/01-values-and-types
-cp exercise.js solution.js      # your working copy — do this once per lesson
-node --test --watch             # the main loop; re-runs on every save
+cp exercise.js solution.js                    # your working copy, once per lesson
+cd ../..
+npm run watch -- 01-values-and-types          # the main loop; re-runs on save
 ```
 
 The tests import `solution.js`, so until you make that copy the suite reports a
@@ -93,10 +94,21 @@ learning journal, not a course to hand out. If you'd rather ship a clean
 template for other people to work through, add `solution.js` to `.gitignore`
 and update rule 4 below.
 
-> **Note:** `node --test <directory>` does **not** work on Node 24 — it tries to
-> execute the directory as a script. Either `cd` into the folder and run
-> `node --test` bare (as above), or pass a glob:
-> `node --test "01-fundamentals/01-values-and-types/*.test.js"`.
+### Two Node quirks worth knowing
+
+**`node --test <directory>` doesn't work** on Node 24 — it tries to execute the
+directory as a script. `cd` into the folder and run `node --test` bare, or pass
+a glob: `node --test "01-fundamentals/01-values-and-types/*.test.js"`.
+
+**`node --test --watch` stops re-running once your code has a syntax error.**
+Node's watcher tracks the module graph of the test files; a `solution.js` that
+can't parse never loads, so it drops out of that graph and is no longer watched.
+You fix the typo and nothing happens — the output is frozen at the error, which
+looks exactly like the watcher having died. (`--watch-path` is rejected
+alongside `--test`, and a static import behaves the same way.) `npm run watch`
+sidesteps it by watching the folder rather than the module graph. If you're
+already stuck in a frozen `--test --watch`, `touch` any `.test.js` file to
+kick it back to life.
 
 Read the README → make your copy → run the tests → watch them fail → make them
 pass one at a time → read the "Going deeper" questions → move on.

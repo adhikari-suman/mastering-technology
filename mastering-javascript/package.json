@@ -6,7 +6,7 @@
   "description": "Exercise-driven path to mastering JavaScript. Zero dependencies.",
   "scripts": {
     "test": "node --test",
-    "test:watch": "node --test --watch",
+    "watch": "node scripts/watch.mjs",
     "setup": "node scripts/lessons.mjs setup",
     "status": "node scripts/lessons.mjs status",
     "reset": "node scripts/lessons.mjs reset",
