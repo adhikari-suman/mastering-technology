@@ -232,10 +232,20 @@ exercises import, because module semantics can't be learned from one file.
 | 05  | Package entry points | Implement `exports` resolution, conditions and wildcards          |
 | 06  | Side effects        | What blocks tree shaking, and the `sideEffects` field             |
 
-### Coming next (I'll build these as you get there)
+### Part 08 — Advanced ✅ available now
 
-- **Part 08 — Advanced**: `Proxy` and `Reflect`, tagged templates,
-  memory model and leaks, micro-benchmarking honestly, metaprogramming.
+Metaprogramming, and a capstone that assembles the whole curriculum into a
+working reactivity system.
 
-Ask me to build the next Part whenever you're ready — or ask for extra drills
-on any lesson that didn't stick.
+| #   | Lesson              | You'll be able to                                              |
+| --- | ------------------- | ---------------------------------------------------------------- |
+| 01  | `Proxy`             | Traps for defaults, validation, observation                       |
+| 02  | `Reflect`           | Correct trap forwarding, and why `receiver` matters               |
+| 03  | Tagged templates    | Safe interpolation — `escapeHtml`, `sql`, `String.raw`            |
+| 04  | Well-known symbols  | `toPrimitive`, `toStringTag`, `hasInstance`, `species`            |
+| 05  | Performance         | Complexity over folklore; benchmarks that don't lie               |
+| 06  | Reactive capstone   | `reactive`/`effect`/`computed` — Vue's core, built by you         |
+
+
+All eight Parts are built: 48 lessons, 684 tests. Ask for extra drills on any
+lesson that didn't stick, or for a new technology folder alongside this one.
