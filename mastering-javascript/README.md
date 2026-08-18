@@ -191,10 +191,22 @@ a promise from scratch — after which none of it is a black box.
 | 05  | Combinators         | Write `all`/`allSettled`/`race`/`any`, plus `AbortController`     |
 | 06  | Build a promise     | The full state machine, adoption, and `then` returning a promise  |
 
+### Part 05 — Collections and data ✅ available now
+
+The data structures beyond object-and-array, and the protocols that make your
+own types work with the language's syntax.
+
+| #   | Lesson              | You'll be able to                                              |
+| --- | ------------------- | ---------------------------------------------------------------- |
+| 01  | `Map` and `Set`     | Pick the right one; set algebra; object keys                      |
+| 02  | Weak collections    | Caches and private data that don't leak                           |
+| 03  | Iteration protocol  | Write `[Symbol.iterator]` by hand; make anything spreadable       |
+| 04  | Generators          | Lazy pipelines, `yield*`, two-way `next(value)`, async generators |
+| 05  | JSON                | Everything it silently drops, replacers, revivers, `structuredClone` |
+| 06  | Immutability        | Nested updates with structural sharing                            |
+
 ### Coming next (I'll build these as you get there)
 
-- **Part 05 — Collections and data**: `Map`, `Set`, `WeakMap`, iterators and
-  the iteration protocol, JSON, structured cloning, immutability patterns.
 - **Part 06 — Errors and robustness**: `Error` subclassing, `throw` vs.
   return-an-error, `try/finally`, unhandled rejections, defensive boundaries.
 - **Part 07 — Modules and tooling**: ESM vs. CommonJS, named vs. default
