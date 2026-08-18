@@ -1,33 +1,15 @@
 /**
- * Lesson 05 — Arrays
- *
- * Prefer array methods over manual loops here.
- *
- * None of these may mutate their arguments.
- *
- * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
- *
- * Start by duplicating it:
- *     cp exercise.js solution.js
- *
- * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
- */
-
-/**
  * doubleAll([1, 2, 3]) -> [2, 4, 6]
  */
 export function doubleAll(numbers) {
-  // TODO: map
-  throw new Error('doubleAll: not implemented');
+  return numbers.map((n) => n * 2);
 }
 
 /**
  * evensOnly([1, 2, 3, 4]) -> [2, 4]
  */
 export function evensOnly(numbers) {
-  // TODO: filter
-  throw new Error('evensOnly: not implemented');
+  return numbers.filter((n) => n % 2 === 0);
 }
 
 /**
@@ -35,8 +17,7 @@ export function evensOnly(numbers) {
  * total([])        -> 0
  */
 export function total(numbers) {
-  // TODO: reduce — and don't forget the initial value
-  throw new Error('total: not implemented');
+  return numbers.reduce((acc, n) => acc + n, 0);
 }
 
 /**
@@ -45,8 +26,7 @@ export function total(numbers) {
  * findUser([{ id: 1, name: 'Ada' }], 1) -> { id: 1, name: 'Ada' }
  */
 export function findUser(users, id) {
-  // TODO: find
-  throw new Error('findUser: not implemented');
+  return users.find((user) => user.id === id);
 }
 
 /**
@@ -54,8 +34,7 @@ export function findUser(users, id) {
  * The input array must not be reordered.
  */
 export function sortByAge(users) {
-  // TODO: copy before you sort (or use toSorted)
-  throw new Error('sortByAge: not implemented');
+  return [...users].sort((userA, userB) => userA.age - userB.age);
 }
 
 /**
@@ -64,16 +43,14 @@ export function sortByAge(users) {
  * names([{ name: 'Ada' }, { name: 'Grace' }]) -> ['Ada', 'Grace']
  */
 export function names(users) {
-  // TODO
-  throw new Error('names: not implemented');
+  return users.map((user) => user.name);
 }
 
 /**
  * merge([1, 2], [3]) -> [1, 2, 3], without mutating either input.
  */
 export function merge(a, b) {
-  // TODO: spread
-  throw new Error('merge: not implemented');
+  return [...a, ...b];
 }
 
 /**
@@ -83,16 +60,16 @@ export function merge(a, b) {
  * firstAndRest([])        -> { first: undefined, rest: [] }
  */
 export function firstAndRest(items) {
-  // TODO
-  throw new Error('firstAndRest: not implemented');
+  const [first, ...rest] = items;
+
+  return { first, rest };
 }
 
 /**
  * Are all the numbers positive? An empty array counts as true.
  */
 export function allPositive(numbers) {
-  // TODO: every
-  throw new Error('allPositive: not implemented');
+  return numbers.every((n) => n > 0);
 }
 
 /**
@@ -103,8 +80,14 @@ export function allPositive(numbers) {
  * chunk([], 3)              -> []
  */
 export function chunk(items, size) {
-  // TODO
-  throw new Error('chunk: not implemented');
+  const result = [];
+
+  for (let idx = 0; idx < items.length; idx += size) {
+    const chunk = items.slice(idx, idx + size);
+    result.push(chunk);
+  }
+
+  return result;
 }
 
 /**
@@ -114,6 +97,8 @@ export function chunk(items, size) {
  * tally([])              -> {}
  */
 export function tally(items) {
-  // TODO: reduce into an object
-  throw new Error('tally: not implemented');
+  return items.reduce((acc, item) => {
+    acc[item] = (acc[item] ?? 0) + 1;
+    return acc;
+  }, {});
 }
