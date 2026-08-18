@@ -148,10 +148,23 @@ The vocabulary. Nothing here is optional; everything later assumes it.
 | 05  | Arrays                  | `map`/`filter`/`reduce` and friends, spread, destructuring      |
 | 06  | Objects                 | Property access, nesting, destructuring, `Object.*`, methods    |
 
+### Part 02 — Functions in depth ✅ available now
+
+Functions as values, taken seriously. Everything here compounds: lesson 01's
+closure is lesson 04's memo cache, and lesson 05's currying is what makes
+lesson 06's pipelines possible.
+
+| #   | Lesson                | You'll be able to                                                |
+| --- | --------------------- | ---------------------------------------------------------------- |
+| 01  | Closures              | Private state, `once`, `memoize`, and why the loop bug happens    |
+| 02  | `this` and binding    | The four rules, their priority, and why arrows are exempt          |
+| 03  | `call`/`apply`/`bind` | Implement all three — standalone, then on `Function.prototype`     |
+| 04  | Recursion             | Base cases, the stack limit, tree-shaped data, memoized branching  |
+| 05  | Currying              | `curry`, `partial`, `unary` — and the `map(parseInt)` fix          |
+| 06  | Composition           | `pipe`, `compose`, `tap`, and why composition wants unary functions |
+
 ### Coming next (I'll build these as you get there)
 
-- **Part 02 — Functions in depth**: closures, higher-order functions, `this`
-  and the four binding rules, `call`/`apply`/`bind`, recursion, currying.
 - **Part 03 — Objects and prototypes**: the prototype chain, `class` as sugar,
   inheritance, `Object.create`, property descriptors, getters/setters, `Symbol`.
 - **Part 04 — Async**: the event loop and the two queues, callbacks →
