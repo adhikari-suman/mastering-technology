@@ -1,32 +1,24 @@
 /**
- * Lesson 04 — Functions
- *
- * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
- *
- * Start by duplicating it:
- *     cp exercise.js solution.js
- *
- * Then write your answers in solution.js, deleting each `throw` as you go.
- * Run `node --test --watch` from inside this folder.
- */
-
-/**
  * Write this as a function DECLARATION.
  * square(4) -> 16
  */
-// TODO: export function square(n) { ... }
+export function square(n) {
+  return n * n;
+}
 
 /**
  * Write this as a function EXPRESSION assigned to a const.
  * cube(3) -> 27
  */
-// TODO: export const cube = function (n) { ... };
+export const cube = function (n) {
+  return n * n * n;
+};
 
 /**
  * Write this as an ARROW function with an implicit return (no braces).
  * double(5) -> 10
  */
-// TODO: export const double = (n) => ...;
+export const double = (n) => n * 2;
 
 /**
  * Default parameter. `greeting` defaults to 'Hello'.
@@ -34,9 +26,8 @@
  * makeGreeting('Ada')          -> 'Hello, Ada!'
  * makeGreeting('Ada', 'Howdy') -> 'Howdy, Ada!'
  */
-export function makeGreeting(name, greeting) {
-  // TODO: give greeting a default in the parameter list, not in the body
-  throw new Error('makeGreeting: not implemented');
+export function makeGreeting(name, greeting = "Hello") {
+  return `${greeting}, ${name}!`;
 }
 
 /**
@@ -45,9 +36,13 @@ export function makeGreeting(name, greeting) {
  * sumAll(1, 2, 3) -> 6
  * sumAll()        -> 0
  */
-export function sumAll() {
-  // TODO
-  throw new Error('sumAll: not implemented');
+export function sumAll(...numbers) {
+  let total = 0;
+  for (let num of numbers) {
+    total += num;
+  }
+
+  return total;
 }
 
 /**
@@ -56,8 +51,7 @@ export function sumAll() {
  * applyTwice(n => n + 3, 1) -> 7
  */
 export function applyTwice(fn, value) {
-  // TODO
-  throw new Error('applyTwice: not implemented');
+  return fn(fn(value));
 }
 
 /**
@@ -67,8 +61,7 @@ export function applyTwice(fn, value) {
  * add5(10) -> 15
  */
 export function makeAdder(amount) {
-  // TODO
-  throw new Error('makeAdder: not implemented');
+  return (n) => n + amount;
 }
 
 /**
@@ -80,8 +73,11 @@ export function makeAdder(amount) {
  * next() -> 2
  */
 export function makeCounter() {
-  // TODO
-  throw new Error('makeCounter: not implemented');
+  let count = 1;
+
+  return function () {
+    return count++;
+  };
 }
 
 /**
@@ -90,4 +86,4 @@ export function makeCounter() {
  *
  * makePoint(1, 2) -> { x: 1, y: 2 }
  */
-// TODO: export const makePoint = (x, y) => ...;
+export const makePoint = (x, y) => ({ x, y });
