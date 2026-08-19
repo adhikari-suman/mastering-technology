@@ -83,6 +83,15 @@ test('unary: drops extra arguments', () => {
   assert.equal(unary(parseInt)('2', 1), 2);
 });
 
+test('unary: actually calls the function it was given', () => {
+  // Guards against an implementation that ignores `fn` and hardcodes one
+  // function. parseInt is only the motivating example, not the job.
+  assert.equal(unary((n) => n * 2)(5), 10);
+  assert.equal(unary((s) => s.toUpperCase())('a'), 'A');
+  const obj = { a: 1 };
+  assert.equal(unary((x) => x)(obj), obj, 'non-numeric values must survive');
+});
+
 test('unary: fixes the classic map(parseInt) bug', () => {
   assert.deepEqual(['1', '2', '3'].map(parseInt), [1, NaN, NaN], 'sanity check');
   assert.deepEqual(['1', '2', '3'].map(unary(parseInt)), [1, 2, 3]);
