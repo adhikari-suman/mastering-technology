@@ -62,6 +62,19 @@ test('compose: one function, and none at all', () => {
   assert.equal(compose()(5), 5);
 });
 
+test('compose: the same composition can be called repeatedly', () => {
+  // Guards against reversing the array in place inside the returned function,
+  // which flips the pipeline on every other call. The two functions must not
+  // commute, or the bug is invisible.
+  const f = compose(double, increment);
+  assert.deepEqual([f(5), f(5), f(5)], [12, 12, 12], 'compose must not mutate fns');
+});
+
+test('pipe: the same composition can be called repeatedly', () => {
+  const f = pipe(double, increment);
+  assert.deepEqual([f(5), f(5), f(5)], [11, 11, 11]);
+});
+
 test('compose is pipe reversed', () => {
   const fns = [increment, double, increment];
   assert.equal(compose(...fns)(3), pipe(...[...fns].reverse())(3));
