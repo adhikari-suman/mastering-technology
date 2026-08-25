@@ -1,4 +1,18 @@
 /**
+ * Part 04, Lesson 02 — Callbacks
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ *
+ * Every callback here is error-first: cb(err, value), err === null on success.
+ */
+
+/**
  * Call `cb(null, value)` after `ms` milliseconds.
  * If `value` is an Error, call cb(value) instead — a way to simulate failure.
  *

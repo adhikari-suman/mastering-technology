@@ -1,4 +1,16 @@
 /**
+ * Part 03, Lesson 05 — Property Descriptors
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * The own property descriptor for `key`, or null if it isn't an own property.
  * (The built-in returns undefined; normalise that to null.)
  */

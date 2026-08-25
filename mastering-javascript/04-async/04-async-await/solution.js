@@ -1,4 +1,16 @@
 /**
+ * Part 04, Lesson 04 — async / await
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * Run each task (a function returning a promise) ONE AT A TIME, in order.
  * Resolve with the results in order.
  *

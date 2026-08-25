@@ -1,4 +1,19 @@
 /**
+ * Lesson 03 — Control Flow
+ *
+ * Write these with explicit loops and branches. Array methods come in lesson 05.
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests. (Don't copy run commands out of
+ * this header into your solution.js — they go stale; the README doesn't.)
+ */
+
+/**
  * Classic FizzBuzz, returned as an array of strings for numbers 1..n.
  * Multiples of 3 -> 'Fizz', of 5 -> 'Buzz', of both -> 'FizzBuzz',
  * everything else -> the number as a string.

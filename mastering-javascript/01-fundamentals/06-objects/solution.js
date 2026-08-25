@@ -1,4 +1,19 @@
 /**
+ * Lesson 06 — Objects
+ *
+ * No function here may mutate its arguments.
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests. (Don't copy run commands out of
+ * this header into your solution.js — they go stale; the README doesn't.)
+ */
+
+/**
  * Read a property whose name is only known at runtime.
  * Return undefined if it isn't there.
  *

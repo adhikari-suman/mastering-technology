@@ -1,4 +1,16 @@
 /**
+ * Part 04, Lesson 01 — The Event Loop
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * PART 1 — Predict the output order of each snippet, as an array of strings.
  * Answer from your head BEFORE running anything.
  */

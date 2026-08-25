@@ -1,4 +1,19 @@
 /**
+ * Part 04, Lesson 05 — Combinators and Cancellation
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ *
+ * RULE: implement the four combinators with `new Promise` and .then/.catch.
+ * Don't delegate to Promise.all/allSettled/race/any.
+ */
+
+/**
  * Resolve with every value once ALL settle successfully, in input order.
  * Reject as soon as any one rejects.
  * all([]) resolves to [].

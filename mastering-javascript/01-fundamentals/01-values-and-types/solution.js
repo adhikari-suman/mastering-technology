@@ -1,4 +1,17 @@
 /**
+ * Lesson 01 — Values and Types
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests. (Don't copy run commands out of
+ * this header into your solution.js — they go stale; the README doesn't.)
+ */
+
+/**
  * Like `typeof`, but honest.
  * Returns 'null' for null and 'array' for arrays; otherwise the normal typeof.
  *

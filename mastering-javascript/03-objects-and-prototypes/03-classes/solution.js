@@ -1,4 +1,16 @@
 /**
+ * Part 03, Lesson 03 — Classes
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * The class version of lesson 02's Dog.
  *   new Dog('Rex').name    -> 'Rex'
  *   new Dog('Rex').speak() -> 'Rex barks'

@@ -1,4 +1,16 @@
 /**
+ * Part 04, Lesson 03 — Promises
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * A promise resolving with undefined after `ms` milliseconds.
  */
 export function wait(ms) {

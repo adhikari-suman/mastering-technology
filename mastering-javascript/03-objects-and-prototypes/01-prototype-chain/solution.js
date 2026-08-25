@@ -1,4 +1,16 @@
 /**
+ * Part 03, Lesson 01 — The Prototype Chain
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * Every object in the prototype chain, starting with the one AFTER obj and
  * ending with the last one before null.
  *

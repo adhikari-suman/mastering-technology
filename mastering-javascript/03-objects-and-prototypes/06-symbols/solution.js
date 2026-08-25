@@ -1,4 +1,16 @@
 /**
+ * Part 03, Lesson 06 — Symbols
+ *
+ * DON'T EDIT THIS FILE. It is the pristine copy you can always reset from.
+ *
+ * Start by duplicating it:
+ *     cp exercise.js solution.js
+ *
+ * Then write your answers in solution.js, deleting each `throw` as you go.
+ * See README.md for how to run the tests.
+ */
+
+/**
  * Attach `data` to obj under a symbol key that nothing else can collide with,
  * and return obj. The data must be invisible to Object.keys and JSON.stringify.
  *
