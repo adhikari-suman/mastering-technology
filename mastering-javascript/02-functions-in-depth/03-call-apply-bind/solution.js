@@ -73,7 +73,6 @@ export function bindWith(fn, thisArg, ...preset) {
  * with for...in and fails if your methods show up.
  * ------------------------------------------------------------------ */
 
-// TODO: define Function.prototype.myCall, myApply and myBind here.
 Object.defineProperty(Function.prototype, "myCall", {
   value: function (thisArg, ...args) {
     thisArg = thisArg == null ? globalThis : Object(thisArg);

@@ -57,7 +57,6 @@ export function toIterator(iterable) {
  * Must work on an INFINITE iterable — pull only what you need.
  */
 export function take(iterable, n) {
-  // TODO: drive the iterator manually; a for...of over an infinite source never ends
   let result = [];
 
   const iterator = iterable[Symbol.iterator]();
