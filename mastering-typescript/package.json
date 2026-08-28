@@ -1,0 +1,24 @@
+{
+  "name": "mastering-typescript",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Exercise-driven path to mastering TypeScript. Two dependencies: the compiler, and Node's own types.",
+  "scripts": {
+    "test": "node scripts/verify.mjs",
+    "types": "node scripts/verify.mjs --types",
+    "run-tests": "node scripts/verify.mjs --tests",
+    "watch": "node scripts/watch.mjs",
+    "setup": "node scripts/lessons.mjs setup",
+    "status": "node scripts/lessons.mjs status",
+    "reset": "node scripts/lessons.mjs reset",
+    "clean": "node scripts/lessons.mjs clean"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.0",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

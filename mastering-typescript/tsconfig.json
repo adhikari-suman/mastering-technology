@@ -1,0 +1,35 @@
+{
+  // The settings every lesson is checked under. Deliberately at the strict end:
+  // a curriculum that teaches you to read `strict` errors is worth more than one
+  // that hides them. Part 06 Lesson 01 pulls every flag here apart.
+  "compilerOptions": {
+    // Node 24 runs the modern syntax natively, so nothing needs downlevelling.
+    "target": "esnext",
+    "lib": ["esnext"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["node"],
+
+    // `strict` is eight flags in a trench coat; these are the ones it leaves off.
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    // tsc only ever checks here; Node executes the .ts files itself.
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+
+    // Keep the source to what Node's type stripper can erase, and make every
+    // type-only import say so. Part 06 is about exactly this pair.
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+
+    "skipLibCheck": true
+  },
+  "include": ["**/*.ts"]
+}
