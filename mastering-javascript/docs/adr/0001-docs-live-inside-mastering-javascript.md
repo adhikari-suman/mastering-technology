@@ -1,5 +1,11 @@
 # Domain docs live inside mastering-javascript, not at the repo root
 
+## Status
+
+Superseded by [`../../../docs/adr/0001`](../../../docs/adr/0001-curriculum-vocabulary-is-shared-at-the-root.md),
+when `mastering-typescript/` arrived and the shared terms were hoisted as this
+ADR anticipated.
+
 The repository is named `mastering-technology` and is structured to hold one
 folder per technology, but JavaScript is the only one that exists and the only
 one being actively built. Its `CONTEXT.md` and ADRs therefore live at
