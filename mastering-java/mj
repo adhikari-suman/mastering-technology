@@ -1,0 +1,352 @@
+#!/usr/bin/env bash
+#
+# mj — the whole tool for this curriculum.
+#
+#   ./mj doctor            check the JDK and the JUnit jar
+#   ./mj setup   [filter]  create Solution.java wherever it's missing
+#   ./mj status  [filter]  which lessons are started / untouched / not begun
+#   ./mj test    [filter]  compile and run the tests
+#   ./mj watch   [filter]  the main loop: re-run on save
+#   ./mj reset   [filter]  restore Solution.java from Exercise.java  (destructive)
+#   ./mj clean   [filter]  delete Solution.java                      (destructive)
+#
+# The filter substring-matches a lesson path, so you can act on one lesson or
+# one Part instead of all forty-eight:
+#
+#   ./mj test 05-errors
+#   ./mj reset 01-foundations/03-control-flow --yes
+#
+# With no filter, `mj` scopes itself to wherever you ran it from: inside a
+# lesson folder it acts on that lesson, inside a Part on that Part, at the root
+# on everything.
+#
+# Written in bash rather than Java on purpose. This script has to run *before*
+# the toolchain is known to be good — its first job is telling you that your
+# JDK is the wrong version — so it cannot depend on being able to compile Java.
+
+set -uo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BUILD="$ROOT/.build"
+LIB="$ROOT/lib"
+JUNIT_VERSION="1.14.4"
+JUNIT_JAR="$LIB/junit-platform-console-standalone-$JUNIT_VERSION.jar"
+JUNIT_URL="https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/$JUNIT_VERSION/junit-platform-console-standalone-$JUNIT_VERSION.jar"
+REQUIRED_JDK=25
+
+if [ -t 1 ]; then
+  BOLD=$'\033[1m'; DIM=$'\033[2m'; RED=$'\033[31m'; GREEN=$'\033[32m'; YELLOW=$'\033[33m'; OFF=$'\033[0m'
+else
+  BOLD=""; DIM=""; RED=""; GREEN=""; YELLOW=""; OFF=""
+fi
+
+die() { printf '%s\n' "${RED}$*${OFF}" >&2; exit 1; }
+
+# ---------------------------------------------------------------- toolchain
+
+# The major version, as an integer. `java -version` writes to stderr, and the
+# string is "25.0.4" on a release build but bare "25" on some EA builds, so take
+# the first dot-separated field of whatever is in quotes.
+jdk_major() {
+  local raw
+  raw="$(java -version 2>&1 | head -1 | sed -n 's/.*"\([^"]*\)".*/\1/p')"
+  printf '%s' "${raw%%.*}" | sed 's/[^0-9].*//'
+}
+
+require_jdk() {
+  command -v java >/dev/null 2>&1 || die "No java on PATH. See ./mj doctor."
+  command -v javac >/dev/null 2>&1 || die "No javac on PATH — you have a JRE, not a JDK. See ./mj doctor."
+  local major; major="$(jdk_major)"
+  if [ -z "$major" ] || [ "$major" -lt "$REQUIRED_JDK" ] 2>/dev/null; then
+    printf '%s\n' "${RED}This curriculum needs JDK $REQUIRED_JDK; you are on ${major:-unknown}.${OFF}" >&2
+    printf '%s\n' "Run ./mj doctor for how to install it." >&2
+    exit 1
+  fi
+}
+
+require_junit() {
+  [ -f "$JUNIT_JAR" ] && return 0
+  mkdir -p "$LIB"
+  printf '%s\n' "${DIM}fetching junit-platform-console-standalone $JUNIT_VERSION …${OFF}"
+  if ! curl -sSL --fail --max-time 120 -o "$JUNIT_JAR" "$JUNIT_URL"; then
+    rm -f "$JUNIT_JAR"
+    die "Could not download JUnit. Check your connection, or fetch it by hand into lib/:
+    $JUNIT_URL"
+  fi
+}
+
+cmd_doctor() {
+  printf '%s\n' "${BOLD}Toolchain${OFF}"
+  if command -v java >/dev/null 2>&1; then
+    local major; major="$(jdk_major)"
+    printf '  java    %s\n' "$(java -version 2>&1 | head -1)"
+    printf '  javac   %s\n' "$(javac -version 2>&1 | head -1)"
+    if [ -n "$major" ] && [ "$major" -ge "$REQUIRED_JDK" ] 2>/dev/null; then
+      printf '  %s\n' "${GREEN}JDK $major — good.${OFF}"
+    else
+      printf '  %s\n' "${RED}JDK $REQUIRED_JDK required, found ${major:-unknown}.${OFF}"
+    fi
+  else
+    printf '  %s\n' "${RED}no java on PATH${OFF}"
+  fi
+  printf '\n%s\n' "${BOLD}JUnit${OFF}"
+  if [ -f "$JUNIT_JAR" ]; then
+    printf '  %s\n' "${GREEN}$(basename "$JUNIT_JAR")${OFF}"
+  else
+    printf '  %s\n' "${DIM}not fetched yet — ./mj setup or ./mj test will get it${OFF}"
+  fi
+  printf '\n%s\n' "${BOLD}Installing Temurin 25${OFF}"
+  printf '  %s\n' "sdk install java 25.0.4-tem     # SDKMAN, honours .sdkmanrc"
+  printf '  %s\n' "brew install --cask temurin@25  # Homebrew"
+  printf '\n  %s\n' "${DIM}With SDKMAN, 'sdk env' inside this folder switches to the pinned version.${OFF}"
+}
+
+# ------------------------------------------------------------------ lessons
+
+# Every lesson folder that ships an Exercise.java, as "part/lesson" paths.
+find_lessons() {
+  local part lesson
+  for part in "$ROOT"/[0-9][0-9]-*; do
+    [ -d "$part" ] || continue
+    for lesson in "$part"/[0-9][0-9]-*; do
+      [ -d "$lesson" ] || continue
+      [ -f "$lesson/Exercise.java" ] || continue
+      printf '%s/%s\n' "$(basename "$part")" "$(basename "$lesson")"
+    done
+  done
+}
+
+# An explicit argument wins; otherwise scope to the directory you typed this in.
+infer_filter() {
+  local explicit="${1:-}"
+  if [ -n "$explicit" ]; then printf '%s' "$explicit"; return; fi
+  local here; here="$(pwd -P)"
+  case "$here" in
+    "$ROOT") printf '' ;;
+    "$ROOT"/*) printf '%s' "${here#"$ROOT"/}" ;;
+    *) printf '' ;;
+  esac
+}
+
+state_of() {
+  local dir="$ROOT/$1"
+  [ -f "$dir/Solution.java" ] || { printf 'missing'; return; }
+  if cmp -s "$dir/Exercise.java" "$dir/Solution.java"; then printf 'untouched'; else printf 'started'; fi
+}
+
+# --------------------------------------------------------------- commands
+
+cmd_status() {
+  local width=0 l
+  for l in "${LESSONS[@]}"; do [ ${#l} -gt $width ] && width=${#l}; done
+  local started=0
+  for l in "${LESSONS[@]}"; do
+    local s; s="$(state_of "$l")"
+    local mark=" " label
+    case "$s" in
+      started)   mark="*"; label="started"; started=$((started+1)) ;;
+      untouched) label="untouched copy" ;;
+      missing)   label="no Solution.java" ;;
+    esac
+    printf '%s %-*s  %s\n' "$mark" "$width" "$l" "$label"
+  done
+  printf '\n%d of %d lesson(s) started.\n' "$started" "${#LESSONS[@]}"
+}
+
+cmd_setup() {
+  require_junit
+  local created=0 l
+  for l in "${LESSONS[@]}"; do
+    [ "$(state_of "$l")" = "missing" ] || continue
+    cp "$ROOT/$l/Exercise.java" "$ROOT/$l/Solution.java"
+    printf 'created %s/Solution.java\n' "$l"
+    created=$((created+1))
+  done
+  if [ "$created" -eq 0 ]; then
+    printf 'Nothing to do — all %d matching lesson(s) already have a Solution.java.\n' "${#LESSONS[@]}"
+  else
+    printf 'Created %d file(s).\n' "$created"
+  fi
+}
+
+# reset and clean throw work away, so anything started needs --yes.
+cmd_destructive() {
+  local verb="$1"
+  local targets=() withwork=() l
+  for l in "${LESSONS[@]}"; do
+    local s; s="$(state_of "$l")"
+    [ "$s" = "missing" ] && continue
+    targets+=("$l")
+    [ "$s" = "started" ] && withwork+=("$l")
+  done
+  if [ ${#targets[@]} -eq 0 ]; then
+    printf 'Nothing to do — no Solution.java files match.\n'; return 0
+  fi
+  if [ ${#withwork[@]} -gt 0 ] && [ "$YES" != "1" ]; then
+    printf '%s\n\n' "${RED}Refusing to $verb ${#withwork[@]} Solution.java file(s) containing your work:${OFF}" >&2
+    for l in "${withwork[@]}"; do printf '    %s/Solution.java\n' "$l" >&2; done
+    printf '\nRe-run with --yes if you mean it.\n' >&2
+    printf '%s\n' "${DIM}(If these are committed, git checkout brings them back afterwards.)${OFF}" >&2
+    exit 1
+  fi
+  for l in "${targets[@]}"; do
+    if [ "$verb" = "overwrite" ]; then
+      cp "$ROOT/$l/Exercise.java" "$ROOT/$l/Solution.java"; printf 'reset %s/Solution.java\n' "$l"
+    else
+      rm -f "$ROOT/$l/Solution.java"; printf 'deleted %s/Solution.java\n' "$l"
+    fi
+  done
+}
+
+# Compile and run one lesson. Human-readable output goes to stdout; the verdict
+# comes back in LESSON_RESULT, because capturing the function's stdout to read
+# the verdict would swallow the report the reader is here for.
+LESSON_RESULT=""
+run_lesson() {
+  local l="$1" dir="$ROOT/$1" out="$BUILD/$1"
+  if [ "$(state_of "$l")" = "missing" ]; then LESSON_RESULT="skip"; return; fi
+
+  # A lesson that needs preview features carries its own flags file.
+  local flags=() cflags=() line
+  if [ -f "$dir/java.flags" ]; then
+    while read -r line; do [ -n "$line" ] && flags+=("$line"); done < "$dir/java.flags"
+  fi
+  # The two tools disagree about --enable-preview: javac refuses it unless a
+  # source level is pinned, and the launcher has no --release option at all. So
+  # the compile side gets the extra pair and the run side does not, and a
+  # java.flags file only ever has to say --enable-preview.
+  cflags=(${flags[@]+"${flags[@]}"})
+  for line in ${flags[@]+"${flags[@]}"}; do
+    [ "$line" = "--enable-preview" ] && cflags+=(--release "$REQUIRED_JDK")
+  done
+
+  rm -rf "$out"; mkdir -p "$out"
+  local sources=("$dir/Solution.java" "$dir/ExerciseTest.java")
+  if [ -d "$dir/support" ]; then
+    local f
+    while IFS= read -r f; do sources+=("$f"); done < <(find "$dir/support" -name '*.java')
+  fi
+
+  printf '%s\n' "${BOLD}$l${OFF}"
+
+  local compile status
+  # ${arr[@]+"${arr[@]}"} rather than "${arr[@]}": macOS ships bash 3.2, where
+  # expanding an empty array under `set -u` is an "unbound variable" error.
+  compile="$(javac ${cflags[@]+"${cflags[@]}"} -cp "$JUNIT_JAR" -d "$out" "${sources[@]}" 2>&1)"
+  status=$?
+  [ -n "$compile" ] && printf '%s\n' "$compile" | sed 's/^/  /'
+  if [ $status -ne 0 ]; then
+    printf '  %s\n\n' "${RED}COMPILE FAILED${OFF}"; LESSON_RESULT="fail"; return
+  fi
+
+  local output
+  output="$(java ${flags[@]+"${flags[@]}"} -jar "$JUNIT_JAR" execute \
+      --class-path "$out" --scan-class-path \
+      --details=tree --disable-ansi-colors --disable-banner 2>&1)"
+  status=$?
+  printf '%s\n' "$output" | sed 's/^/  /'
+  printf '\n'
+  if [ $status -eq 0 ]; then LESSON_RESULT="pass"; else LESSON_RESULT="fail"; fi
+}
+
+cmd_test() {
+  require_junit
+  local ready=() l
+  for l in "${LESSONS[@]}"; do
+    [ "$(state_of "$l")" != "missing" ] && ready+=("$l")
+  done
+  if [ ${#ready[@]} -eq 0 ]; then
+    printf '%s\n' "Nothing to test — no Solution.java in ${#LESSONS[@]} matching lesson(s)."
+    printf '%s\n' "${DIM}Make one first:  cp Exercise.java Solution.java    (or: ./mj setup)${OFF}"
+    exit 1
+  fi
+  local passed=0 failed=0
+  for l in "${ready[@]}"; do
+    run_lesson "$l"
+    case "$LESSON_RESULT" in
+      pass) passed=$((passed+1)) ;;
+      fail) failed=$((failed+1)) ;;
+    esac
+  done
+  printf '%s\n' "────────────────────────────────────────"
+  if [ "$failed" -eq 0 ]; then
+    printf '%s\n' "${GREEN}${passed} lesson(s) green.${OFF}"
+  else
+    printf '%s\n' "${RED}${failed} lesson(s) red${OFF}, ${passed} green."
+  fi
+  [ "$failed" -eq 0 ]
+}
+
+# Poll rather than depend on fswatch/inotify: one stat per file per second is
+# nothing, and it works the same everywhere.
+cmd_watch() {
+  require_junit
+  local sig prev=""
+  printf '%s\n' "${DIM}watching ${#LESSONS[@]} lesson(s) — ctrl-c to stop${OFF}"
+  while true; do
+    sig=""
+    for l in "${LESSONS[@]}"; do
+      local f="$ROOT/$l/Solution.java"
+      [ -f "$f" ] && sig="$sig$(stat -f '%m%z' "$f" 2>/dev/null || stat -c '%Y%s' "$f" 2>/dev/null)"
+    done
+    if [ "$sig" != "$prev" ]; then
+      prev="$sig"
+      printf '\033[2J\033[H'
+      printf '%s\n\n' "${DIM}$(date '+%H:%M:%S')${OFF}"
+      cmd_test
+    fi
+    sleep 1
+  done
+}
+
+# -------------------------------------------------------------------- main
+
+COMMAND="${1:-status}"
+shift 2>/dev/null || true
+
+YES=0
+ARGS=()
+for a in "$@"; do
+  case "$a" in
+    --yes) YES=1 ;;
+    --*) die "Unknown flag: $a" ;;
+    *) ARGS+=("$a") ;;
+  esac
+done
+
+[ "$COMMAND" = "doctor" ] && { cmd_doctor; exit 0; }
+[ "$COMMAND" = "help" ] || [ "$COMMAND" = "--help" ] && { sed -n '2,28p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0; }
+
+case "$COMMAND" in
+  status|setup|test|watch|reset|clean) ;;
+  *) die "Unknown command: $COMMAND   (try: ./mj help)" ;;
+esac
+
+require_jdk
+
+FILTER="$(infer_filter "${ARGS[0]:-}")"
+LESSONS=()
+while IFS= read -r l; do
+  case "$l" in *"$FILTER"*) LESSONS+=("$l") ;; esac
+done < <(find_lessons)
+
+if [ ${#LESSONS[@]} -eq 0 ]; then
+  if [ -n "$FILTER" ]; then die "No lesson matches \"$FILTER\"."; else die "No lessons found."; fi
+fi
+
+if [ "$COMMAND" != "status" ]; then
+  if [ -n "$FILTER" ]; then
+    printf '%s\n' "${DIM}Scope: $FILTER (${#LESSONS[@]} lesson(s))${OFF}"
+  else
+    printf '%s\n' "${DIM}Scope: all ${#LESSONS[@]} lessons${OFF}"
+  fi
+fi
+
+case "$COMMAND" in
+  status) cmd_status ;;
+  setup)  cmd_setup ;;
+  test)   cmd_test ;;
+  watch)  cmd_watch ;;
+  reset)  cmd_destructive overwrite ;;
+  clean)  cmd_destructive delete ;;
+esac

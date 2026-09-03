@@ -8,6 +8,7 @@ technology live in that folder's own `CONTEXT.md`:
 
 - [`mastering-javascript/CONTEXT.md`](mastering-javascript/CONTEXT.md)
 - [`mastering-typescript/CONTEXT.md`](mastering-typescript/CONTEXT.md)
+- [`mastering-java/CONTEXT.md`](mastering-java/CONTEXT.md)
 
 ## Language
 
