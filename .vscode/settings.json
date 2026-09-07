@@ -1,8 +1,0 @@
-{
-  // Prettier only reads .prettierignore from the directory it runs in, and the
-  // extension runs at the workspace root — so point it at the per-folder files.
-  "prettier.ignorePath": [
-    "mastering-javascript/.prettierignore",
-    "mastering-typescript/.prettierignore"
-  ]
-}
