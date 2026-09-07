@@ -1,0 +1,12 @@
+# Pristine lesson files are the reset point a Solution is copied from — they are
+# never edited, so Prettier must never rewrite them either. A format-on-save in
+# an open exercise.test.ts once produced a 200-line whitespace diff.
+#
+# NOTE: Prettier only looks for .prettierignore in the directory it is RUN from,
+# so this file applies when running from inside mastering-typescript/. The repo-root
+# case is wired up in .vscode/settings.json via prettier.ignorePath.
+**/exercise.ts
+**/exercise.test.ts
+**/fixtures/**
+
+node_modules/
