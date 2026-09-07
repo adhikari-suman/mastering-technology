@@ -1,0 +1,19 @@
+# Pristine lesson files are the reset point a Solution is copied from — they are
+# never edited, so Prettier must never rewrite them either. A format-on-save in
+# an open exercise.test.js once produced a 200-line whitespace-only diff.
+#
+# This lives at the repo root on purpose: Prettier reads .prettierignore only
+# from the directory it is RUN from, and never walks up from the file being
+# formatted the way it does for .prettierrc. Since the editor's workspace root
+# is this directory, this is the only place the ignore is actually honoured.
+**/exercise.js
+**/exercise.ts
+**/exercise.test.js
+**/exercise.test.ts
+**/fixtures/**
+
+# Generated / vendored
+node_modules/
+mastering-java/lib/
+mastering-java/.build/
+.tsconfig.scope.json
